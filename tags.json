@@ -1,0 +1,331 @@
+{
+  "name": "Manual_Rollerbeds",
+  "tagType": "Folder",
+  "tags": [
+    {
+      "name": "FPM24_1",
+      "typeId": "AGTC_Manual",
+      "tagType": "UdtInstance",
+      "tags": [
+        {
+          "name": "Coordinate",
+          "tagType": "Folder",
+          "tags": [
+            {
+              "value": 1,
+              "name": "Y_Direction",
+              "tagType": "AtomicTag"
+            },
+            {
+              "name": "Auto_State",
+              "tagType": "AtomicTag"
+            },
+            {
+              "value": -1,
+              "name": "Y_Direction_Dest",
+              "tagType": "AtomicTag"
+            },
+            {
+              "value": -999,
+              "name": "X_Location",
+              "tagType": "AtomicTag"
+            },
+            {
+              "name": "Auto",
+              "tagType": "AtomicTag"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "FPM23_1",
+      "typeId": "AGTC_Manual",
+      "tagType": "UdtInstance",
+      "tags": [
+        {
+          "name": "Coordinate",
+          "tagType": "Folder",
+          "tags": [
+            {
+              "value": -999,
+              "name": "X_Location",
+              "tagType": "AtomicTag"
+            },
+            {
+              "value": 1,
+              "name": "Y_Direction_Dest",
+              "tagType": "AtomicTag"
+            },
+            {
+              "name": "Auto",
+              "tagType": "AtomicTag"
+            },
+            {
+              "value": -1,
+              "name": "Y_Direction",
+              "tagType": "AtomicTag"
+            },
+            {
+              "name": "Auto_State",
+              "tagType": "AtomicTag"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "FPM2_1",
+      "typeId": "AGTC_Manual",
+      "tagType": "UdtInstance",
+      "tags": [
+        {
+          "name": "Coordinate",
+          "tagType": "Folder",
+          "tags": [
+            {
+              "value": 16615,
+              "name": "X_Location",
+              "tagType": "AtomicTag"
+            },
+            {
+              "value": 1,
+              "name": "Y_Direction",
+              "tagType": "AtomicTag"
+            },
+            {
+              "value": -1,
+              "name": "Y_Direction_Dest",
+              "tagType": "AtomicTag"
+            },
+            {
+              "name": "Auto",
+              "tagType": "AtomicTag"
+            },
+            {
+              "name": "Auto_State",
+              "tagType": "AtomicTag"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "FPM9_1",
+      "typeId": "AGTC_Manual",
+      "tagType": "UdtInstance",
+      "tags": [
+        {
+          "name": "Coordinate",
+          "tagType": "Folder",
+          "tags": [
+            {
+              "value": -1,
+              "name": "Y_Direction",
+              "tagType": "AtomicTag"
+            },
+            {
+              "name": "Auto",
+              "tagType": "AtomicTag"
+            },
+            {
+              "value": 1,
+              "name": "Y_Direction_Dest",
+              "tagType": "AtomicTag"
+            },
+            {
+              "name": "Auto_State",
+              "tagType": "AtomicTag"
+            },
+            {
+              "value": 26230,
+              "name": "X_Location",
+              "tagType": "AtomicTag"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "FPM1_1",
+      "typeId": "AGTC_Manual",
+      "tagType": "UdtInstance",
+      "tags": [
+        {
+          "name": "Coordinate",
+          "tagType": "Folder",
+          "tags": [
+            {
+              "value": -1,
+              "name": "Y_Direction",
+              "tagType": "AtomicTag"
+            },
+            {
+              "name": "Auto_State",
+              "tagType": "AtomicTag"
+            },
+            {
+              "value": 1,
+              "name": "Y_Direction_Dest",
+              "tagType": "AtomicTag"
+            },
+            {
+              "value": false,
+              "name": "Auto",
+              "tagType": "AtomicTag"
+            },
+            {
+              "value": 18295,
+              "name": "X_Location",
+              "tagType": "AtomicTag"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "FPM17_1",
+      "typeId": "AGTC_Manual",
+      "tagType": "UdtInstance",
+      "tags": [
+        {
+          "name": "Coordinate",
+          "tagType": "Folder",
+          "tags": [
+            {
+              "name": "Auto_State",
+              "tagType": "AtomicTag"
+            },
+            {
+              "value": 1,
+              "name": "Y_Direction_Dest",
+              "tagType": "AtomicTag"
+            },
+            {
+              "value": -999,
+              "name": "X_Location",
+              "tagType": "AtomicTag"
+            },
+            {
+              "name": "Auto",
+              "tagType": "AtomicTag"
+            },
+            {
+              "value": -1,
+              "name": "Y_Direction",
+              "tagType": "AtomicTag"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "FPM8_1",
+      "typeId": "AGTC_Manual",
+      "tagType": "UdtInstance",
+      "tags": [
+        {
+          "name": "Coordinate",
+          "tagType": "Folder",
+          "tags": [
+            {
+              "value": 1,
+              "name": "Y_Direction",
+              "tagType": "AtomicTag"
+            },
+            {
+              "name": "Auto",
+              "tagType": "AtomicTag"
+            },
+            {
+              "value": -1,
+              "name": "Y_Direction_Dest",
+              "tagType": "AtomicTag"
+            },
+            {
+              "value": 22015,
+              "name": "X_Location",
+              "tagType": "AtomicTag"
+            },
+            {
+              "name": "Auto_State",
+              "tagType": "AtomicTag"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "FPM18_1",
+      "typeId": "AGTC_Manual",
+      "tagType": "UdtInstance",
+      "tags": [
+        {
+          "name": "Coordinate",
+          "tagType": "Folder",
+          "tags": [
+            {
+              "name": "Auto",
+              "tagType": "AtomicTag"
+            },
+            {
+              "name": "Auto_State",
+              "tagType": "AtomicTag"
+            },
+            {
+              "value": -999,
+              "name": "X_Location",
+              "tagType": "AtomicTag"
+            },
+            {
+              "value": 1,
+              "name": "Y_Direction",
+              "tagType": "AtomicTag"
+            },
+            {
+              "value": -1,
+              "name": "Y_Direction_Dest",
+              "tagType": "AtomicTag"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "FPM11_1",
+      "typeId": "AGTC_Manual",
+      "tagType": "UdtInstance",
+      "tags": [
+        {
+          "name": "Coordinate",
+          "tagType": "Folder",
+          "tags": [
+            {
+              "value": 28091,
+              "name": "X_Location",
+              "tagType": "AtomicTag"
+            },
+            {
+              "value": 1,
+              "name": "Y_Direction_Dest",
+              "tagType": "AtomicTag"
+            },
+            {
+              "name": "Auto_State",
+              "tagType": "AtomicTag"
+            },
+            {
+              "value": -1,
+              "name": "Y_Direction",
+              "tagType": "AtomicTag"
+            },
+            {
+              "name": "Auto",
+              "tagType": "AtomicTag"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
