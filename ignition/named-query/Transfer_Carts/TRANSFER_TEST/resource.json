@@ -1,0 +1,85 @@
+{
+  "scope": "DG",
+  "version": 2,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "query.sql"
+  ],
+  "attributes": {
+    "useMaxReturnSize": false,
+    "autoBatchEnabled": false,
+    "fallbackValue": "",
+    "maxReturnSize": 100,
+    "cacheUnit": "SEC",
+    "type": "UpdateQuery",
+    "enabled": true,
+    "cacheAmount": 1,
+    "cacheEnabled": false,
+    "database": "Sample_SQLite_Database",
+    "fallbackEnabled": false,
+    "lastModificationSignature": "d774d4702970af7483960050b5030bf0985c5d5334656c697b63aa6053388ba3",
+    "permissions": [
+      {
+        "zone": "",
+        "role": ""
+      }
+    ],
+    "lastModification": {
+      "actor": "MPS",
+      "timestamp": "2024-06-26T13:28:22Z"
+    },
+    "parameters": [
+      {
+        "type": "Parameter",
+        "identifier": "sourcex",
+        "sqlType": 2
+      },
+      {
+        "type": "Parameter",
+        "identifier": "sourcey",
+        "sqlType": 2
+      },
+      {
+        "type": "Parameter",
+        "identifier": "destinationx",
+        "sqlType": 2
+      },
+      {
+        "type": "Parameter",
+        "identifier": "destinationy",
+        "sqlType": 2
+      },
+      {
+        "type": "Parameter",
+        "identifier": "dest_is_auto",
+        "sqlType": 6
+      },
+      {
+        "type": "Parameter",
+        "identifier": "source_is_auto",
+        "sqlType": 6
+      },
+      {
+        "type": "Parameter",
+        "identifier": "destination_path",
+        "sqlType": 7
+      },
+      {
+        "type": "Parameter",
+        "identifier": "source_path",
+        "sqlType": 7
+      },
+      {
+        "type": "Parameter",
+        "identifier": "d_path",
+        "sqlType": 7
+      },
+      {
+        "type": "Parameter",
+        "identifier": "s_path",
+        "sqlType": 7
+      }
+    ]
+  }
+}

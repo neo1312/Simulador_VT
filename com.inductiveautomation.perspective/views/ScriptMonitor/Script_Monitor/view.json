@@ -1,0 +1,187 @@
+{
+  "custom": {
+    "instances": [
+      {
+        "active": false,
+        "description": "value",
+        "name": 1
+      },
+      {
+        "active": false,
+        "description": "value",
+        "name": 2
+      }
+    ]
+  },
+  "params": {
+    "script_steps": [
+      {
+        "description": "value",
+        "name": 1
+      },
+      {
+        "description": "value",
+        "name": 2
+      }
+    ]
+  },
+  "propConfig": {
+    "custom.instances": {
+      "binding": {
+        "config": {
+          "path": "session.custom.script_steps"
+        },
+        "transforms": [
+          {
+            "code": "\tsteps \u003d self.params.script_steps\n\tresult \u003d []\n\tfor step in steps:\n\t\tinstance \u003d {\u0027name\u0027: step[\u0027name\u0027], \u0027description\u0027: step[\u0027description\u0027], \u0027active\u0027:False}\n\t\tif step[\u0027name\u0027] in value:\n\t\t\tinstance[\u0027active\u0027] \u003d True\n\t\t\t\n\t\tresult.append(instance)\n\t\t\n\treturn result",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      },
+      "persistent": true
+    },
+    "params.script_steps": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 1080,
+      "width": 1920
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "header"
+            },
+            "position": {
+              "basis": "30px"
+            },
+            "props": {
+              "style": {
+                "padding": "5px"
+              },
+              "text": "Script Gateway Timer Log",
+              "textStyle": {
+                "fontWeight": "bold",
+                "textAlign": "center"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "msg_log"
+            },
+            "position": {
+              "basis": "50px"
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "path": "session.custom.script_message"
+                  },
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "borderStyle": "solid",
+                "borderWidth": 0.5
+              },
+              "textStyle": {
+                "textAlign": "center"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "flex_log"
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "padding": "10px"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "header"
+            },
+            "position": {
+              "basis": "30px"
+            },
+            "props": {
+              "text": "Script Gateway Timer Steps",
+              "textStyle": {
+                "fontWeight": "bold",
+                "textAlign": "center"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "flex_repeater_steps"
+            },
+            "position": {
+              "basis": "320px",
+              "grow": 1
+            },
+            "propConfig": {
+              "props.instances": {
+                "binding": {
+                  "config": {
+                    "path": "view.custom.instances"
+                  },
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "column",
+              "path": "ScriptMonitor/Script_Steps",
+              "wrap": "wrap"
+            },
+            "type": "ia.display.flex-repeater"
+          }
+        ],
+        "meta": {
+          "name": "flex_steps"
+        },
+        "position": {
+          "basis": "500px",
+          "grow": 1
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "padding": "10px"
+          }
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column"
+    },
+    "type": "ia.container.flex"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "scope": "DG",
+  "version": 2,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "query.sql"
+  ],
+  "attributes": {
+    "useMaxReturnSize": false,
+    "autoBatchEnabled": false,
+    "fallbackValue": "",
+    "maxReturnSize": 100,
+    "cacheUnit": "SEC",
+    "type": "UpdateQuery",
+    "enabled": true,
+    "cacheAmount": 1,
+    "cacheEnabled": false,
+    "database": "HOLAWDSQL3P",
+    "fallbackEnabled": false,
+    "lastModificationSignature": "72bf64b3282d0e7fb554c78a26a3fcefcdc87d8dd25c267a0d671a947ca6ee30",
+    "permissions": [
+      {
+        "zone": "",
+        "role": ""
+      }
+    ],
+    "lastModification": {
+      "actor": "Admin",
+      "timestamp": "2024-04-29T13:00:44Z"
+    }
+  }
+}

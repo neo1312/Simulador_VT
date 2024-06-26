@@ -1,0 +1,65 @@
+{
+  "scope": "DG",
+  "version": 2,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "query.sql"
+  ],
+  "attributes": {
+    "useMaxReturnSize": false,
+    "autoBatchEnabled": false,
+    "fallbackValue": "",
+    "maxReturnSize": 100,
+    "cacheUnit": "SEC",
+    "type": "UpdateQuery",
+    "enabled": true,
+    "cacheAmount": 1,
+    "cacheEnabled": false,
+    "database": "",
+    "fallbackEnabled": false,
+    "lastModificationSignature": "b761af49bd5dc0cf718a9d56ed1e69b828a3020ac0dafd060f2fe6f38d4c759c",
+    "permissions": [
+      {
+        "zone": "",
+        "role": ""
+      }
+    ],
+    "lastModification": {
+      "actor": "MPS",
+      "timestamp": "2024-05-22T18:55:53Z"
+    },
+    "parameters": [
+      {
+        "type": "QueryString",
+        "identifier": "table_name",
+        "sqlType": 7
+      },
+      {
+        "type": "Parameter",
+        "identifier": "logger",
+        "sqlType": 7
+      },
+      {
+        "type": "Parameter",
+        "identifier": "message",
+        "sqlType": 7
+      },
+      {
+        "type": "Parameter",
+        "identifier": "level_",
+        "sqlType": 7
+      },
+      {
+        "type": "Parameter",
+        "identifier": "time_stamp",
+        "sqlType": 8
+      },
+      {
+        "type": "Parameter",
+        "identifier": "project",
+        "sqlType": 7
+      }
+    ]
+  }
+}

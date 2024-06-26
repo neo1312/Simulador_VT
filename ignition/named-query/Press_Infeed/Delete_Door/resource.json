@@ -1,0 +1,45 @@
+{
+  "scope": "DG",
+  "version": 2,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "query.sql"
+  ],
+  "attributes": {
+    "useMaxReturnSize": false,
+    "autoBatchEnabled": false,
+    "fallbackValue": "",
+    "maxReturnSize": 100,
+    "cacheUnit": "SEC",
+    "type": "UpdateQuery",
+    "enabled": true,
+    "cacheAmount": 1,
+    "cacheEnabled": false,
+    "database": "",
+    "fallbackEnabled": false,
+    "lastModificationSignature": "d07fdd69b6141e70fa5a2548235265f7659abbb08a73a8fbabedb7ef3402f8f1",
+    "permissions": [
+      {
+        "zone": "",
+        "role": ""
+      }
+    ],
+    "lastModification": {
+      "actor": "MPS",
+      "timestamp": "2024-03-12T19:41:32Z"
+    },
+    "parameters": [
+      {
+        "type": "Parameter",
+        "identifier": "Serial",
+        "sqlType": 7
+      },
+      {
+        "type": "Parameter",
+        "identifier": "user",
+        "sqlType": 7
+      }
+    ]
+  }
+}

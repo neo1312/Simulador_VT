@@ -1,0 +1,395 @@
+<?xml version="1.0" ?>
+<sfc zoom="0.5999999" canvas="52 47" execution-mode="Callable" hot-editable="false" persist-state="true" redundant-sync="false">
+	<step id="e1ba1c35-fd1c-4aa7-a8dc-c0fa73bcb067" location="5 0" name="__begin" factory-id="begin-step">
+<parameters>
+	<parameter><name>sourcepath</name><expression>'test'</expression></parameter>
+	<parameter><name>destinationpath</name><expression>'test'</expression></parameter>
+	<parameter><name>tc_path</name><expression>'[default]PressIF_TransferCart/TC_AGTC'</expression></parameter>
+	<parameter><name>Pos_error</name><expression>20</expression></parameter>
+</parameters>
+	</step>
+	<step id="d23c8f98-a253-4b62-85e6-f243900596fe" location="11 12" name="S2" factory-id="action-step">
+		<start-script>def onStart(chart, step): # WARNING: This resource was generated in a newer version of Ignition. For the best editing experience, recreate it in the current version.
+	system.tag.write(chart.sourcepath + '/TransComm/InSourcePos_SMTOPLC', 1)
+	</start-script>
+	</step>
+	<step id="a1c69539-018f-46a9-9421-9a7ecde1365a" location="11 18" name="S3" factory-id="action-step">
+		<start-script>def onStart(chart, step): # WARNING: This resource was generated in a newer version of Ignition. For the best editing experience, recreate it in the current version.
+	system.tag.write(chart.tc_path + '/TransComm/InSourcePos_SMTOPLC', 1)</start-script>
+	</step>
+	<step id="1b3633fe-f689-4ca8-b167-f1e69b3217cd" location="25 6" name="S7" factory-id="action-step">
+		<start-script>def onStart(chart, step): # WARNING: This resource was generated in a newer version of Ignition. For the best editing experience, recreate it in the current version.
+	tagpath = chart.sourcepath
+	original = tagpath.split('[default]Press_Infeed/AGTC_')
+	location = original[1]
+	pile = system.tag.read(chart.tc_path + '/Door/Door_0/PileNumber').value
+	serial = system.tag.read(tagpath + '/Door/Door_0/Serial').value
+	sequence = 1
+	pileSequence = system.tag.read('[default]Press_Infeed/DF_Pile_Sequence').value
+	parameters = {'Source':location}
+	Functions.Perform_SP_Query(serial, location, sequence, pile, pileSequence)
+	system.db.runNamedQuery('Transfer_Carts/Queue/Infeed_Transfer_Queue_Delete', parameters)</start-script>
+	</step>
+	<step id="63f1c3b9-5756-4131-b595-2439c3bc0788" location="11 24" name="S4" factory-id="action-step">
+		<start-script>def onStart(chart, step): # WARNING: This resource was generated in a newer version of Ignition. For the best editing experience, recreate it in the current version.
+	Functions.write_door_values(chart.sourcepath, chart.tc_path)</start-script>
+	</step>
+	<step id="2141ce7d-fa1f-4b34-a9e5-d1afe207f64e" location="37 6" name="S9" factory-id="action-step">
+		<start-script>def onStart(chart, step): # WARNING: This resource was generated in a newer version of Ignition. For the best editing experience, recreate it in the current version.
+	tagpath = chart.sourcepath
+	original = tagpath.split('[default]Press_Infeed/AGTC_')
+	location = original[1]
+	pile = system.tag.read(chart.tc_path + '/Door/Door_0/PileNumber').value
+	serial = system.tag.read(tagpath + '/Door/Door_0/Serial').value
+	sequence = 1
+	pileSequence = system.tag.read('[default]Press_Infeed/DF_Pile_Sequence').value
+	parameters = {'Source':location}
+	Functions.Perform_SP_Query(serial, location, sequence, pile, pileSequence)
+	system.db.runNamedQuery('Transfer_Carts/Queue/Infeed_Transfer_Queue_Delete', parameters)</start-script>
+	</step>
+	<step id="fc613aeb-81b1-42d0-8703-105fde1fcb55" location="37 14" name="S10" factory-id="action-step">
+		<start-script>def onStart(chart, step): # WARNING: This resource was generated in a newer version of Ignition. For the best editing experience, recreate it in the current version.
+	system.tag.write(chart.destinationpath + '/TransComm/InDestPos_SMTOPLC', 1)
+	</start-script>
+	</step>
+	<step id="3cf59dd2-96fc-4541-9dc8-6c219781036a" location="37 20" name="S11" factory-id="action-step">
+		<start-script>def onStart(chart, step): # WARNING: This resource was generated in a newer version of Ignition. For the best editing experience, recreate it in the current version.
+	system.tag.write(chart.tc_path + '/TransComm/InDestPos_SMTOPLC', 1)</start-script>
+	</step>
+	<step id="2091e72c-5f01-4c08-ba87-946ba57f1ae0" location="37 26" name="S12" factory-id="action-step">
+		<start-script>def onStart(chart, step): # WARNING: This resource was generated in a newer version of Ignition. For the best editing experience, recreate it in the current version.
+	Functions.write_door_values(chart.tc_path, chart.destinationpath)</start-script>
+	</step>
+	<step id="3841f700-52e7-4f95-8217-ae9b14904ad2" location="38 38" name="__end1" factory-id="end-step">	</step>
+	<transition id="167c1cb5-3869-4114-b534-e793b0664b31" location="3 3">tag({tc_path} + '/TransComm/SourceIsAuto_SMTOPLC') = 0</transition>
+	<transition id="3bacfb72-3a9c-4632-8622-d7ef18456cc0" location="0 6">tag({tc_path} + '/TransComm/InSourcePos_PLCTOSM') &gt;= tag({sourcepath} + '/TransComm/InSourcePos_PLCTOSM') </transition>
+	<transition id="ddc56080-95c5-4990-ad92-71fc7db589be" location="8 3">tag({tc_path} + '/TransComm/SourceIsAuto_SMTOPLC')</transition>
+	<transition id="ed7e4e4e-a7ed-4314-8d26-1f3657b1c211" location="11 6">tag({tc_path} + '/TransComm/InSourcePos_PLCTOSM')</transition>
+	<transition id="85c88780-c18b-473a-9fa9-863d2a6407f8" location="11 8">tag({sourcepath} + '/TransComm/InSourcePos_PLCTOSM')</transition>
+	<transition id="0cd2d969-0d0e-407f-8821-2583733c46ba" location="0 16">tag({tc_path} + '/TransComm/ActualPosition_PLCTOSM') &gt;= tag({sourcepath} + '/Coordinate/X_Location') - {Pos_error} </transition>
+	<transition id="0cd0dfa1-91e6-483f-ba08-e490e57c716f" location="11 15">tag({tc_path} + '/TransComm/InSourcePos_SMTOPLC')</transition>
+	<transition id="9d1ed550-c603-4746-8ccf-af16bb23dc3f" location="0 20">tag({tc_path} + '/TransComm/ActualPosition_PLCTOSM') &lt;= tag({sourcepath} + '/Coordinate/X_Location') + {Pos_error}</transition>
+	<transition id="2b0c6148-08af-4726-912c-a117ce4ab58e" location="11 22">tag({tc_path} + '/TransComm/InSourcePos_SMTOPLC')</transition>
+	<transition id="81251895-65a2-4d05-a324-8494ea141e68" location="25 12">tag({tc_path} + '/TransComm/InDestPos_PLCTOSM')</transition>
+	<transition id="f254b602-d811-4617-9a1e-d6185d67abdc" location="28 2">tag({tc_path} + '/TransComm/DestIsAuto_SMTOPLC') = 0</transition>
+	<transition id="5300a363-f94a-4e49-9a88-e0023e4d5486" location="11 26">tag({tc_path} + '/Door/Door_0/PileNumber') != ''</transition>
+	<transition id="b76fb626-93bf-4f2a-86b2-a48c4cfd5fc6" location="0 29">tag({tc_path} + '/LocOccupied_PLCTOSM')=1</transition>
+	<transition id="9d3a8ad2-e687-4d5f-a168-8bde819467c4" location="25 17">tag({tc_path} + '/TransComm/ActualPosition_PLCTOSM') &gt;= tag({sourcepath} + '/Coordinate/X_Location') - {Pos_error} </transition>
+	<transition id="474f1bd4-b0d5-4a72-8076-3cdf1a58183a" location="25 20">tag({tc_path} + '/TransComm/ActualPosition_PLCTOSM') &lt;= tag({sourcepath} + '/Coordinate/X_Location') + {Pos_error}</transition>
+	<transition id="014ac401-b687-492e-972a-944744e1f785" location="34 2">tag({tc_path} + '/TransComm/DestIsAuto_SMTOPLC')
+</transition>
+	<transition id="f7c68411-222e-47fc-9ca2-8b95c970949c" location="11 35">tag({tc_path} + '/LocOccupied_PLCTOSM') = 0</transition>
+	<transition id="a2ab94fc-d013-4887-a1d3-7aea1a2ae145" location="13 35">tag({tc_path} + '/LocOccupied_PLCTOSM')</transition>
+	<transition id="78ce094f-314a-4d96-8e30-fd6528373dbf" location="25 29">tag({tc_path} + '/LocOccupied_PLCTOSM') = 0</transition>
+	<transition id="ccf8292a-1c16-48e3-a2a9-43d28c22e7aa" location="37 10">tag({destinationpath} + '/TransComm/InDestPos_PLCTOSM')</transition>
+	<transition id="f7187b06-7f8f-476d-ba72-5ac9f1c38cc8" location="37 12">tag({tc_path} + '/TransComm/InDestPos_PLCTOSM')</transition>
+	<transition id="0d54502d-cb7d-4b34-a9e5-dda8a7da51d4" location="37 17">tag({tc_path} + '/TransComm/InDestPos_PLCTOSM')</transition>
+	<transition id="9083e11b-4364-4510-94d1-6a9e25e3f7bd" location="37 23">tag({tc_path} + '/TransComm/InDestPos_SMTOPLC')</transition>
+	<transition id="40888d39-d983-4723-ade8-63bab3557be8" location="37 27">tag({destinationpath} + '/Door/Door_0/PileNumber') != ''</transition>
+	<transition id="3d76926d-ea07-4cdc-9ab5-617f5b35ebd8" location="37 35">tag({tc_path} + '/LocOccupied_PLCTOSM') = 1</transition>
+	<transition id="4aa47f94-3414-4ff4-8617-fe0fb8fb676e" location="38 35">tag({tc_path} + '/LocOccupied_PLCTOSM') = 0</transition>
+	<parallel id="685d05d0-976e-4471-8c1b-105909ddf0fc" location="11 29" size="2 4">
+		<step id="f2757742-41de-4789-bb70-995d870322db" location="0 1" name="S5" factory-id="action-step">
+			<start-script>def onStart(chart, step): # WARNING: This resource was generated in a newer version of Ignition. For the best editing experience, recreate it in the current version.
+	value = system.tag.read(chart.tc_path + '/TransComm/SourceRollRun_PLCTOSM').value
+	path = chart.sourcepath + '/TransComm/SourceRollRun_SMTOPLC'
+	if value == 1:
+		system.tag.write(path, value)
+	elif value == 0:
+		system.tag.write(path, value)</start-script>
+		</step>
+		<step id="61d5a6d5-8f92-48c1-bf3c-2701647ff3fd" location="0 -1" name="__parallel_begin1" factory-id="begin-step">		</step>
+		<step id="b38f397e-ee7c-4b65-b52b-62312409cee0" location="1 1" name="S6" factory-id="action-step">
+			<start-script>def onStart(chart, step): # WARNING: This resource was generated in a newer version of Ignition. For the best editing experience, recreate it in the current version.
+	value = system.tag.read(chart.sourcepath + '/TransComm/SourceRollRun_PLCTOSM').value
+	path = chart.tc_path + '/TransComm/SourceRollRun_SMTOPLC'
+	if value == 1:
+		system.tag.write(path, value)
+	elif value == 0:
+		system.tag.write(path, value)</start-script>
+		</step>
+		<step id="62a66ef7-b59e-4151-8f23-59bfcbfa0ee3" location="1 -1" name="__parallel_begin2" factory-id="begin-step">		</step>
+		<step id="c4057898-3a9b-4798-b706-ef7d730b41bd" location="0 2" name="__parallel_end1" factory-id="end-step">		</step>
+		<step id="2314d591-bc3c-4d90-a2fd-ec1481fb3654" location="1 2" name="__parallel_end2" factory-id="end-step">		</step>
+		<link id="485d5df8-7628-4342-896a-c576a16775d2" location="0 0"><up/><down/></link>
+		<link id="76ec0dac-0c70-4ef7-89ee-5eb046907de5" location="1 0"><up/><down/></link>
+	</parallel>
+	<parallel id="2eb0615e-0090-459c-99b8-dc1c6c06604d" location="37 29" size="2 4">
+		<step id="d6d75e9c-23d7-411f-a38e-7481bf92e232" location="0 1" name="S13" factory-id="action-step">
+			<start-script>def onStart(chart, step): # WARNING: This resource was generated in a newer version of Ignition. For the best editing experience, recreate it in the current version.
+	value = system.tag.read(chart.tc_path + '/TransComm/DestRollRun_PLCTOSM').value
+	path = chart.destinationpath + '/TransComm/DestRollRun_SMTOPLC'
+	if value == 1:
+		system.tag.write(path, value)
+	elif value == 0:
+		system.tag.write(path, value)</start-script>
+		</step>
+		<step id="97a87212-cfa7-403d-b312-2f1a7199af8d" location="0 -1" name="__parallel_begin1" factory-id="begin-step">		</step>
+		<step id="0d71b4f3-65ca-46cd-a454-b24662004a7c" location="1 1" name="S14" factory-id="action-step">
+			<start-script>def onStart(chart, step): # WARNING: This resource was generated in a newer version of Ignition. For the best editing experience, recreate it in the current version.
+	value = system.tag.read(chart.destinationpath + '/TransComm/DestRollRun_PLCTOSM').value
+	path = chart.tc_path + '/TransComm/DestRollRun_SMTOPLC'
+	if value == 1:
+		system.tag.write(path, value)
+	elif value == 0:
+		system.tag.write(path, value)</start-script>
+		</step>
+		<step id="92454046-5035-4865-af49-5ba56230e2a4" location="1 -1" name="__parallel_begin2" factory-id="begin-step">		</step>
+		<step id="8e380421-82c4-4226-8675-1a023271a43d" location="0 2" name="__parallel_end1" factory-id="end-step">		</step>
+		<step id="6cb6bd2a-6bc8-4252-be39-24c70937cd82" location="1 2" name="__parallel_end2" factory-id="end-step">		</step>
+		<link id="78229688-1a9d-4509-8cd6-f89e67e03a81" location="0 0"><up/><down/></link>
+		<link id="b1564bc6-3771-48dd-a7a0-07ff49cca32a" location="1 0"><up/><down/></link>
+	</parallel>
+	<jump id="901b04f1-ef6f-4ec8-af46-33af19ccf9b0" location="13 38">C</jump>
+	<anchor id="8b750989-befd-44bf-98c0-02cee08fd46a" location="31 0">C</anchor>
+	<note id="648cc3a7-c896-4b2e-983f-f920a40c2e9d" location="1 6" size="9 1">TransferCart/TransComm/InSourcePos_PLCTOSM = 1</note>
+	<note id="66598ffd-6a67-48a7-ac9a-c7032f348451" location="9 0" size="9 2">SFC Called from Gateway timer script
+Source and Destination paths are passed in from timer script</note>
+	<note id="a346479d-d2d8-4fbe-ac5a-d88ac2654862" location="9 3" size="9 2">If TC/Source_is_autoSMTOPLC  = 0, Manual 
+If TC/Source_is_autoSMTOPLC  = 1, Auto
+</note>
+	<note id="17ebf780-ce7a-45e4-86fb-9721138a4550" location="13 6" size="11 1">TransferCart/TransComm/InSourcePos_PLCTOSM = 1</note>
+	<note id="3ad4a6c2-d551-45c6-85e4-01b622a73b0d" location="13 8" size="11 1">Source/TransComm/InSourcePos_PLCTOSM = 1</note>
+	<note id="b9bb6b65-4325-4b1a-b848-c8d57a52eb64" location="1 16" size="9 2">Check if  [TransferCart]/TransComm/InSourcePos_SMTOPLC is in 
+left side interval   </note>
+	<note id="9cf7a26c-fe04-4d6a-8690-71204613ecb9" location="13 11" size="11 2">When TC reaches source 
+Set [Source]/TransComm/InSourcePos_SMTOPLC to true</note>
+	<note id="44228db5-baf6-4876-8a30-ff24b478695f" location="13 14" size="11 2">Source/TransComm/InSourcePos_SMTOPLC
+Double check bit went true</note>
+	<note id="67bb5856-0307-4a3b-8321-aa3b10bd5948" location="1 20" size="9 2">Check if  [TransferCart]/TransComm/InSourcePos_SMTOPLC is in 
+right side interval   </note>
+	<note id="b1ab9cf1-38be-4b06-ad33-ddb0f93e8c57" location="13 17" size="11 2">Set [TransferCart]/TransComm/InSourcePos_SMTOPLC to true</note>
+	<note id="e86fb29a-e0fe-4e07-9579-dc56f1c43355" location="13 21" size="11 2">TransferCart/TransComm/InSourcePos_SMTOPLC
+Double check bit went true</note>
+	<note id="d69c5805-d455-4c20-b240-af30b927c182" location="26 6" size="10 2">Delete queue record and call update pile location 
+stored procedure
+</note>
+	<note id="9620922f-ea1b-43e6-8179-a1ff4c6f2ced" location="13 24" size="11 1">Transfer Doors array in source pile to Transfer Cart</note>
+	<note id="00e6dc78-d039-43ec-b591-7027069a982b" location="1 28" size="9 2">If TC/LocOccupied_PLCTOSM = 0, wait
+If TC/LocOccupied_PLCTOSM = 1, finish
+</note>
+	<note id="43915ce9-6342-461e-9da9-571371d7970b" location="26 12" size="10 1">TransferCart/TransComm/InDestPos_PLCTOSM = 1</note>
+	<note id="ef45eb0a-6896-4068-a3a5-0236cf5ec4ce" location="13 26" size="11 2">Check pilenumber on first door of transfer cart to make
+sure its populated</note>
+	<note id="7d0db286-f5a2-4a6d-8add-1812088b6c02" location="26 17" size="9 2">Check if  [TransferCart]/TransComm/InDestPos_SMTOPLC is in 
+left side interval   </note>
+	<note id="7f6e15b6-3fd0-4f15-ab36-21fa73dce232" location="13 29" size="11 2">S3 - Set Value of Source/TransComm/SourceRollRun_SMTOPLC ==
+Value of TC/TransComm/SourceRollRun_PLCTOSM</note>
+	<note id="ec261056-590d-4b5c-a079-552f92141cdb" location="26 20" size="9 2">Check if  [TransferCart]/TransComm/InDestPos_SMTOPLC is in 
+right side interval   </note>
+	<note id="cbdc9b94-b7b5-4c9d-be3e-9e11867c09aa" location="13 31" size="11 2">S4 - Set Value of TC/TransComm/SourceRollRun_SMTOPLC ==
+Value of Source/TransComm/SourceRollRun_PLCTOSM</note>
+	<note id="d22fdc35-611c-4a11-91b1-1643f77d4467" location="35 1" size="9 2">If TC/Dest_is_autoSMTOPLC  = 0, Manual
+If TC/Dest_is_autoSMTOPLC = 1, Auto 
+</note>
+	<note id="8ea58995-caf0-47f2-b8be-b2a29b398e51" location="14 35" size="8 2">If TC/LocOccupied_PLCTOSM = 0, loop
+If TC/LocOccupied_PLCTOSM = 1, end loop
+</note>
+	<note id="961bc7c4-2a51-417a-b406-ef948e283db9" location="26 28" size="9 2">If TC/LocOccupied_PLCTOSM = 1, wait
+If TC/LocOccupied_PLCTOSM = 0, finish
+</note>
+	<note id="841eac66-c28a-4477-ad40-4058e6a94046" location="38 6" size="10 2">Delete queue record and call update pile location stored
+ procedure
+</note>
+	<note id="228d4c59-a640-4f7e-99a9-89e983c2b0db" location="38 10" size="10 1">Destination/TransComm/InDestPos_PLCTOSM = 1</note>
+	<note id="39d43d2b-185b-48b5-af96-56283fc697bf" location="38 12" size="10 1">TransferCart/TransComm/InDestPos_PLCTOSM = 1</note>
+	<note id="d3b46517-7863-4490-8cf9-e249bfe87fc6" location="38 14" size="10 2">When TC reaches destination
+Set [Destination]/TransComm/InDestPos_SMTOPLC to true</note>
+	<note id="4e16e424-e668-407e-abad-3079c57993ff" location="38 17" size="10 2">Destination/TransComm/InDestPos_SMTOPLC
+Double check bit went true</note>
+	<note id="505485b3-c8c6-42bf-8a04-19bd3ca53643" location="38 20" size="10 2">When TC reaches destination
+Set [TranferCart]/TransComm/InDestPos_SMTOPLC to true</note>
+	<note id="256d7f79-e9bc-4355-b066-4dadbdd6a7c1" location="38 23" size="10 2">TransferCart/TransComm/InDestPos_SMTOPLC
+Double check bit went true</note>
+	<note id="ace1f337-b339-4e85-a984-6cbe15b3c04f" location="39 26" size="9 1">Transfer Doors array in transfer cart to destination array</note>
+	<note id="1d3631e5-c8e2-4a9e-91da-539b9ad38dfb" location="39 27" size="9 1">Check pilenumber on first door of destination to make
+sure its populated</note>
+	<note id="35a9b3c9-6664-4545-8cf8-1c0f34ac5a22" location="39 29" size="9 2">S8 - Set Value of Destination/TransComm/DestRollRun_SMTOPLC ==
+Value of TC/TransComm/DestRollRun_PLCTOSM</note>
+	<note id="01f2c237-328b-4c1a-8b87-7b045c952a61" location="39 31" size="9 2">S9 - Set Value of TC/TransComm/DestRollRun_SMTOPLC ==
+Value of Destination/TransComm/DestRollRun_PLCTOSM</note>
+	<note id="bd2000cc-5729-41d7-9a9f-2d70b429488e" location="39 34" size="9 2">If TC/LocOccupied_PLCTOSM = 1, loop
+If TC/LocOccupied_PLCTOSM = 0, end loop
+</note>
+	<note id="98c5b1ad-3bb0-49e7-9be1-b3a15c0807aa" location="39 37" size="9 4">Finish secuential chart, and start time script,
+if doesn find any auto moves and operator 
+set park_location_smtoplc the car goes to 
+park location.</note>
+	<link id="83b8c7e2-df3c-4b9b-9e43-f3c8b7d128ad" location="3 1"><left/><down/><right/></link>
+	<link id="b607abfd-1d7c-4e04-8671-3e7a45977adf" location="3 2"><up/><down/></link>
+	<link id="95dd0e8f-877b-4ad4-85d7-853324d5f7d0" location="4 1"><left/><right/></link>
+	<link id="852b3edd-2f06-4a3e-9975-8d5fc35748f9" location="0 5"><up/><down/><right/></link>
+	<link id="50147d9c-a315-4b9e-84bd-4380a3842870" location="3 4"><up/><down/></link>
+	<link id="83d9dcbd-35c2-4c6e-8c46-5bde74f38eb6" location="1 5"><left/><right/></link>
+	<link id="12173246-2f94-432f-84fa-719f0b2ba677" location="5 1"><up/><left/><down/><right/></link>
+	<link id="3945d56f-ef93-4f28-813d-4e4d7e0c97b7" location="2 5"><left/><right/></link>
+	<link id="01c2ae58-c6dd-4c6a-b096-8ce244c2a6ea" location="3 5"><up/><left/><right/></link>
+	<link id="e76ac506-ebc2-4023-b233-154b61dcc351" location="6 1"><up/><left/><down/><right/></link>
+	<link id="8109a69b-f6af-409d-b988-6c0c25a10b0d" location="0 7"><up/><down/></link>
+	<link id="d0b6701f-c37c-42ca-9927-cec59a40de4e" location="7 1"><up/><left/><right/></link>
+	<link id="2f1494c9-3fa5-4666-aaf9-81e0be44be17" location="0 8"><up/><down/></link>
+	<link id="c43807ed-d4e9-40e8-aeba-d7647d600702" location="8 1"><up/><left/><down/></link>
+	<link id="bfaf821e-3274-40ef-96bc-2b238aa8e05e" location="8 2"><up/><down/></link>
+	<link id="6e2100e3-015f-443c-8dfe-f10125c08127" location="8 4"><up/><down/></link>
+	<link id="6f84ab6b-991e-4784-9e6a-2ee43b581fde" location="0 9"><up/><down/></link>
+	<link id="24e10f9d-e400-4f31-a9aa-9f26b4e8e731" location="8 5"><up/><down/><right/></link>
+	<link id="5fb153a7-1ed6-44b1-9592-95bb20a5d1ef" location="0 10"><up/><down/></link>
+	<link id="8a32e9c5-0da9-422a-8f68-2259a5d422a9" location="9 5"><left/><right/></link>
+	<link id="561e1eb4-710c-49f6-abc4-bde4a96dbe62" location="0 11"><up/><down/></link>
+	<link id="3649ccff-5e9a-449b-be41-7138f29d3ce7" location="10 5"><left/><right/></link>
+	<link id="6e4cb861-49cb-40bd-8089-7d6ec25cfb4c" location="0 12"><up/><down/></link>
+	<link id="6dc933c4-ae67-421a-a3e8-208ac4a6248d" location="11 5"><up/><left/><down/></link>
+	<link id="44a20715-26bb-418a-a0bb-faa888054034" location="0 13"><up/><down/></link>
+	<link id="ab82017d-3f9a-4dbd-a6a6-ef9435e6591b" location="11 7"><up/><down/></link>
+	<link id="c0703a13-0dcb-4202-9508-82600e961361" location="0 14"><up/><down/></link>
+	<link id="04e17c86-7d1b-4665-aa04-ec0db55da392" location="11 9"><up/><down/></link>
+	<link id="123eb0df-1c63-4c6e-8cfd-8a020d16dd31" location="11 10"><up/><down/></link>
+	<link id="9fa795f4-010c-4f61-bd63-6c3ed0a9b11f" location="0 15"><up/><down/></link>
+	<link id="90121a00-c399-4805-a311-66869ce85f69" location="11 11"><up/><down/></link>
+	<link id="058d3503-d035-4209-acae-ad3db4792615" location="0 17"><up/><down/></link>
+	<link id="5589b7fe-4b3d-4c56-ab32-fae18880cb30" location="11 13"><up/><down/></link>
+	<link id="a1b4b7c9-001e-4ca7-abb2-aaad6ee46816" location="11 14"><up/><down/></link>
+	<link id="eefd8b4e-2b19-40b5-8597-e4657675cd48" location="0 18"><up/><down/></link>
+	<link id="a81445e9-89eb-45f0-9209-f1cf3736be8f" location="0 19"><up/><down/></link>
+	<link id="d13fb065-68ee-45b4-af83-1ca0788ad03c" location="11 16"><up/><down/></link>
+	<link id="8cfeca1e-5389-4307-8b37-1af49de224f1" location="11 17"><up/><down/></link>
+	<link id="03c01c5e-1b31-43b9-835f-a1a6e398b51e" location="0 21"><up/><down/></link>
+	<link id="2cad66d3-7d7c-452d-b601-b7e49d2d5328" location="11 19"><up/><down/></link>
+	<link id="9b184e78-d0f5-4f55-9381-fe2ad4a30cb4" location="0 22"><up/><down/></link>
+	<link id="76c37d27-5a1d-4e2d-8604-6bbf33d3f881" location="11 20"><up/><down/></link>
+	<link id="edea57b2-741b-4aaf-9ea6-7137ffa45184" location="0 23"><up/><down/></link>
+	<link id="7ece45cb-f442-482d-81cc-748329819652" location="11 21"><up/><down/></link>
+	<link id="a1d9c5b6-a83e-40ce-a193-fa9b0d552745" location="0 24"><up/><down/></link>
+	<link id="d74b12a8-fa98-43aa-a654-ab146ce89dc8" location="0 25"><up/><down/></link>
+	<link id="1e2b0f56-36f8-442b-9b7a-4132283809a6" location="25 4"><up/><down/><right/></link>
+	<link id="011f84b6-c4ff-439c-a875-98d2cae9dfd5" location="25 5"><up/><down/></link>
+	<link id="28b0abc0-01f6-4462-9c92-c8b76b2dfcf4" location="11 23"><up/><down/></link>
+	<link id="f44e65b0-d270-4005-82d6-22a6b8ae0216" location="25 7"><up/><down/></link>
+	<link id="9b821648-064f-484e-bad4-baf5f58a02c5" location="0 26"><up/><down/></link>
+	<link id="933480d1-746c-4965-ab6d-2ab276d80905" location="25 8"><up/><down/></link>
+	<link id="3d12b130-9e67-4f36-a94b-759ece9d1803" location="26 4"><left/><right/></link>
+	<link id="36d08755-33dd-46d8-9aa1-c3728729f3dc" location="25 9"><up/><down/></link>
+	<link id="1269cf30-dfca-452c-8fad-4303126ab10e" location="25 10"><up/><down/></link>
+	<link id="e12cc5b9-750e-469d-8cd6-ce86f9fbc592" location="0 27"><up/><down/></link>
+	<link id="8b3df616-8d28-4b78-a371-f7d86f6ce5ee" location="27 4"><left/><right/></link>
+	<link id="514b1adc-f5b5-4728-87f9-5fab83897013" location="25 11"><up/><down/></link>
+	<link id="3ab54c98-8828-4c60-ad31-53cc8a9a7f8d" location="11 25"><up/><down/></link>
+	<link id="ed24fb74-2414-4505-ae9c-2dffdb2aff73" location="0 28"><up/><down/></link>
+	<link id="e58d8101-7527-49ea-bf61-1a3c7ad6f736" location="28 1"><left/><down/><right/></link>
+	<link id="c0f2b9be-be6b-4e73-9a22-f05c6c4f8da3" location="28 3"><up/><down/></link>
+	<link id="0d8a4251-31f5-4be5-84c7-0e7321301e3d" location="25 13"><up/><down/></link>
+	<link id="00855e5d-8264-4760-9c1b-1a4c167a07d2" location="28 4"><up/><left/><down/></link>
+	<link id="8653bb1b-49ab-4bc7-8f7c-b27f029b6987" location="25 14"><up/><down/></link>
+	<link id="1861d79a-faf8-4ad8-8cf8-51275c1ec8db" location="29 1"><left/><right/></link>
+	<link id="1b006b91-540b-42e0-8ab8-295c1a29e33a" location="25 15"><up/><down/></link>
+	<link id="e3d09c88-f89d-45c3-9a17-c223f08a7718" location="11 27"><up/><down/></link>
+	<link id="7a6a94ff-6c02-4dca-8673-27677487de68" location="25 16"><up/><down/></link>
+	<link id="5d7082f9-8bd3-427d-9a8a-7d8876f900c5" location="10 28"><up/><down/><right/></link>
+	<link id="2694fcc8-0456-465d-b184-ae0f84a6421d" location="0 30"><up/><down/></link>
+	<link id="afcd2ea9-d550-4bbf-9a6a-786ae175b7f2" location="30 1"><left/><right/></link>
+	<link id="60a9486a-e17e-4fd5-a82e-3544196d8ace" location="11 28"><up/><left/><down/></link>
+	<link id="56782932-c859-4585-b760-571c63863d38" location="10 29"><up/><down/></link>
+	<link id="800c77a9-af83-4739-95be-8d251923470c" location="25 18"><up/><down/></link>
+	<link id="9018c84e-8066-4cb0-bc20-8e5b93f5ded7" location="0 31"><up/><down/></link>
+	<link id="987fd119-e469-44f3-b302-31ffa3ff3058" location="31 1"><up/><left/><down/><right/></link>
+	<link id="efdec1d4-dc91-4d62-ac15-9d42a2db2eda" location="25 19"><up/><down/></link>
+	<link id="6f842439-d18d-4944-b2af-a76dc4c50cf2" location="10 30"><up/><down/></link>
+	<link id="b6c74d9c-f26c-4cce-8fa9-ed2190e11361" location="0 32"><up/><down/></link>
+	<link id="d41e2a81-4a37-4e34-bc1f-598890c1d3c6" location="32 1"><left/><right/></link>
+	<link id="ebab6c8e-213b-4dc4-9e09-afb75640352d" location="10 31"><up/><down/></link>
+	<link id="13fdad6b-0ed5-419f-ae6f-7842357744ac" location="25 21"><up/><down/></link>
+	<link id="19b42335-4e35-4080-a6f9-18e98421107e" location="0 33"><up/><down/></link>
+	<link id="75dc82c0-1bde-4b74-b12d-16653d17b404" location="33 1"><left/><right/></link>
+	<link id="c79eb8d7-3cfd-4365-b817-66064d69d7d3" location="25 22"><up/><down/></link>
+	<link id="499a9e3d-63da-4cd3-a6d9-b0a58c016e98" location="10 32"><up/><down/></link>
+	<link id="5bfdcd6c-d2b5-4fe8-bd03-fd7fd205f9b1" location="25 23"><up/><down/></link>
+	<link id="56bfd8b3-8823-4e23-8193-fcec492b0150" location="0 34"><up/><down/></link>
+	<link id="051e6028-6b27-48e7-87ef-ab3d54beb7a9" location="34 1"><left/><down/><right/></link>
+	<link id="f103c6a1-4f14-4f98-aa7c-8dc5f04dae34" location="34 3"><up/><down/></link>
+	<link id="e4c45c44-f610-4fec-b1e5-48078c82e22b" location="34 4"><up/><down/><right/></link>
+	<link id="62fb113d-f956-4b64-98a4-d8d6a2aec698" location="10 33"><up/><down/></link>
+	<link id="e15b1cba-56d1-4dc6-b9e1-54c66eaf0218" location="25 24"><up/><down/></link>
+	<link id="3cd5d1b2-d0a3-46a5-b74b-c7d6b2c6d4c7" location="11 33"><up/><down/></link>
+	<link id="d44e8b97-902c-47d2-8265-567697c8075f" location="0 35"><up/><down/></link>
+	<link id="58531172-5757-41aa-b688-4121e55e595a" location="35 4"><left/><right/></link>
+	<link id="43d6d694-af70-4e40-a328-468763528db3" location="25 25"><up/><down/></link>
+	<link id="d19af7e5-62c0-47ff-9ac4-8c3fcf5be264" location="10 34"><up/><down/></link>
+	<link id="bcd37365-eac6-4a6e-8623-60aefd254827" location="11 34"><up/><left/><down/><right/></link>
+	<link id="2c68b2a2-faf5-4f99-b688-3351b92f0d52" location="0 36"><up/><down/></link>
+	<link id="3533431d-5f38-452a-810b-ffd5c78f6992" location="12 34"><left/><right/></link>
+	<link id="f59343c3-b96f-4c7b-ac51-6e0d2268c52c" location="25 26"><up/><down/></link>
+	<link id="e719e7db-9752-4672-8a14-13d31ffe4eb0" location="36 4"><left/><right/></link>
+	<link id="82766698-21a0-440c-a3b7-3c2f6a3a8f8e" location="13 34"><left/><down/><right/></link>
+	<link id="5cb245c5-67dc-4631-a888-1d249f000a8d" location="10 35"><up/><down/></link>
+	<link id="5fa746eb-ddba-4a40-a190-917039d9e13c" location="25 27"><up/><down/></link>
+	<link id="3275ef31-b4e7-4e65-bea8-44151e2bd720" location="0 37"><up/><down/><right/></link>
+	<link id="5b1ef582-de62-40c8-93d2-af0e7c27b35a" location="1 37"><left/><right/></link>
+	<link id="75091dcb-e121-4108-a7af-f9f81eabe69a" location="2 37"><left/><right/></link>
+	<link id="5b001035-961d-4fc1-8940-569f1d348160" location="3 37"><left/><right/></link>
+	<link id="35088946-83b2-4d47-9d67-ea118e55ea33" location="4 37"><left/><right/></link>
+	<link id="38334e2a-7f4b-4d60-8753-54af23aa9191" location="37 4"><up/><left/><down/></link>
+	<link id="ce71f097-2c47-4aef-ad28-4cd122642100" location="37 5"><up/><down/></link>
+	<link id="f0ce32d5-283b-46e6-86ef-61e2a105d36b" location="5 37"><left/><right/></link>
+	<link id="770e86eb-3f7a-436e-9c83-ad3f0598c81d" location="10 36"><up/><left/><right/></link>
+	<link id="f90076b5-0ab2-4c3d-aca6-3bc0a9943c80" location="6 37"><left/><right/></link>
+	<link id="fc52a5e2-83db-43f3-b110-21d97c0715cc" location="25 28"><up/><down/></link>
+	<link id="d4e16b25-5757-42be-9cdb-b61d09a51c7f" location="11 36"><up/><left/><down/></link>
+	<link id="5a40ce50-58b0-42a2-8d07-2a2023d8544a" location="37 7"><up/><down/></link>
+	<link id="e103f63d-69c4-4cb4-acd9-af31198677fa" location="7 37"><left/><right/></link>
+	<link id="332127a6-38b5-47f4-b793-989ba8b746dc" location="37 8"><up/><down/></link>
+	<link id="b9d68de7-3a2c-4333-8e90-e1d877973a85" location="8 37"><left/><right/></link>
+	<link id="1c98b58d-d568-4189-bc91-006a69277b0d" location="37 9"><up/><down/></link>
+	<link id="7df3089e-08f9-41c6-9234-8e768e69ee3a" location="9 37"><left/><right/></link>
+	<link id="9ed15191-9e12-46f7-a163-d1d9acb77029" location="13 36"><up/><down/></link>
+	<link id="43847f44-4099-4085-b8c8-ae7b695375fd" location="10 37"><left/><right/></link>
+	<link id="42b70e94-412d-4744-9449-ae59956cb8bc" location="37 11"><up/><down/></link>
+	<link id="89fb516c-747f-48a0-90f0-8397afc5ccbe" location="11 37"><left/><right/></link>
+	<link id="ae08bed0-9c26-4f05-9491-84c2cd05a2f8" location="12 37"><left/><right/></link>
+	<link id="2451b155-7a26-4892-8601-b05beedd79f7" location="25 30"><up/><down/></link>
+	<link id="424b93d9-2a10-4ff0-9159-7a8622e5ba17" location="13 37"><up/><left/><down/></link>
+	<link id="bedc4748-0c11-402a-8cdd-beb641d7b5f6" location="37 13"><up/><down/></link>
+	<link id="acf0d4e4-d513-43cb-b05c-089142588e2a" location="25 31"><up/><down/></link>
+	<link id="0df247b4-96d3-4201-b2e2-2ff3453b3075" location="37 15"><up/><down/></link>
+	<link id="e4bb5bda-8a1b-43c9-8be1-cbae0a6232e6" location="37 16"><up/><down/></link>
+	<link id="0c5fe409-b034-4c6c-98af-9e421ad9d981" location="25 32"><up/><down/></link>
+	<link id="512f7c79-cc7a-483b-a1ef-a4c1d8928ddc" location="37 18"><up/><down/></link>
+	<link id="c98f6157-cf0e-4a55-be48-25654fe6b5c9" location="25 33"><up/><down/></link>
+	<link id="932529b0-8044-440d-a9cd-c22c98c9b83a" location="37 19"><up/><down/></link>
+	<link id="8075c671-ee3a-4df9-8361-667962791bb5" location="25 34"><up/><down/></link>
+	<link id="d0e9cfaf-c007-4e0d-b5b9-791fdcb41ea9" location="37 21"><up/><down/></link>
+	<link id="dc58ea77-4bff-410b-9009-b69ff553896b" location="25 35"><up/><down/></link>
+	<link id="fa62c6be-d5b7-4b51-94d8-96f5b18332c3" location="37 22"><up/><down/></link>
+	<link id="5dc974e6-f2b4-4f90-b9db-2804c4f8afae" location="25 36"><up/><down/></link>
+	<link id="c44f1e0b-1344-44d4-bf54-174b0ae8e3d3" location="37 24"><up/><down/></link>
+	<link id="86cbbae4-5a0e-4f03-a489-f38aaec1d2bf" location="37 25"><up/><down/></link>
+	<link id="f9910363-fb1d-4dd9-881d-8a60ebe1b4d2" location="25 37"><up/><down/><right/></link>
+	<link id="b06b9d21-857b-476b-89d8-3e1b3f3a1ab7" location="26 37"><left/><right/></link>
+	<link id="d97dce6f-f1ef-4718-b637-a87722765612" location="36 28"><up/><down/><right/></link>
+	<link id="fb876b89-99a4-419b-a8aa-23a7898c1fa2" location="27 37"><left/><right/></link>
+	<link id="046b762a-50b7-45a3-b11a-de1503535311" location="36 29"><up/><down/></link>
+	<link id="48986284-45c4-4199-a78b-59777f9ecc32" location="37 28"><up/><left/><down/></link>
+	<link id="b6de1cb8-3777-417f-819b-de2f19db2cf0" location="28 37"><left/><right/></link>
+	<link id="7a84eea2-9996-48cf-a58d-5ac58de639ba" location="36 30"><up/><down/></link>
+	<link id="5880e100-6491-44fc-a02e-b5f309fead72" location="29 37"><left/><right/></link>
+	<link id="8ba08830-dfcf-4ec8-80e3-997fa0e5185c" location="36 31"><up/><down/></link>
+	<link id="c5fdc5f2-c2b7-42dc-a88e-a1cd0758510a" location="30 37"><left/><right/></link>
+	<link id="c58ffc50-9a14-4c09-a35d-041acf0121fb" location="36 32"><up/><down/></link>
+	<link id="6530bd61-d9f2-4141-a851-c6a572766b61" location="31 37"><left/><right/></link>
+	<link id="ff406cbd-a859-4d46-8d4f-2629ae26921f" location="36 33"><up/><down/></link>
+	<link id="f2e64701-cd90-42c5-86ee-1c5240bb255a" location="32 37"><left/><right/></link>
+	<link id="bb93a536-5781-4bef-8287-fa0bad891533" location="36 34"><up/><down/></link>
+	<link id="d4183afa-88b7-49a0-829a-ecb936cefd4e" location="37 33"><up/><down/></link>
+	<link id="a621c312-604f-405c-b6e3-f6085704880d" location="33 37"><left/><right/></link>
+	<link id="41a91fd4-1ae9-4ba0-9a62-c9da2990c47a" location="36 35"><up/><down/></link>
+	<link id="19345d0c-d7e8-45c9-b1cd-eeea8e64857e" location="37 34"><up/><down/><right/></link>
+	<link id="7d5ec88e-7afb-4fc7-b7fa-dab369b9a74f" location="34 37"><left/><right/></link>
+	<link id="9336e56a-e648-49ca-abe3-2a787e2201ef" location="36 36"><up/><left/><right/></link>
+	<link id="fd2d1f9e-9026-4f63-b85d-823f703d22e9" location="35 37"><left/><right/></link>
+	<link id="f021e8af-be97-4a82-abfe-97e35515bcc8" location="38 34"><left/><down/><right/></link>
+	<link id="8fd44bbc-f693-462a-8d9a-baf758500a01" location="37 36"><up/><left/><down/></link>
+	<link id="9a5c5d24-df45-45c3-ac03-f00a1e4fb4d6" location="36 37"><left/><right/></link>
+	<link id="aaada813-efd6-450d-8dc5-a60b0c799598" location="37 37"><left/><right/></link>
+	<link id="58540e2f-13ab-48ee-9443-9522bc6ad4cc" location="38 36"><up/><down/></link>
+	<link id="0690181c-8365-4c40-a225-bdbf43902315" location="38 37"><up/><left/><down/></link>
+
+</sfc>

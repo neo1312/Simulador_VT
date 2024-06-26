@@ -1,0 +1,45 @@
+{
+  "scope": "DG",
+  "version": 2,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "query.sql"
+  ],
+  "attributes": {
+    "useMaxReturnSize": false,
+    "autoBatchEnabled": false,
+    "fallbackValue": "",
+    "maxReturnSize": 100,
+    "cacheUnit": "SEC",
+    "type": "Query",
+    "enabled": true,
+    "cacheAmount": 1,
+    "cacheEnabled": false,
+    "database": "",
+    "fallbackEnabled": false,
+    "lastModificationSignature": "f54d07f7687cb18eca2875f94fe725ff01539d3537ae71ab6dad6a4183d7229e",
+    "permissions": [
+      {
+        "zone": "",
+        "role": ""
+      }
+    ],
+    "lastModification": {
+      "actor": "MPS",
+      "timestamp": "2024-06-11T15:11:27Z"
+    },
+    "parameters": [
+      {
+        "type": "Parameter",
+        "identifier": "position",
+        "sqlType": 4
+      },
+      {
+        "type": "Parameter",
+        "identifier": "slider",
+        "sqlType": 7
+      }
+    ]
+  }
+}

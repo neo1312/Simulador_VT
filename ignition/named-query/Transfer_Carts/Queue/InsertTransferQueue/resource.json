@@ -1,0 +1,60 @@
+{
+  "scope": "DG",
+  "version": 2,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "query.sql"
+  ],
+  "attributes": {
+    "useMaxReturnSize": false,
+    "autoBatchEnabled": false,
+    "fallbackValue": "",
+    "maxReturnSize": 100,
+    "cacheUnit": "SEC",
+    "type": "UpdateQuery",
+    "enabled": true,
+    "cacheAmount": 1,
+    "cacheEnabled": false,
+    "database": "Sample_SQLite_Database",
+    "fallbackEnabled": false,
+    "lastModificationSignature": "74426afc064c7d8880afd73d19145fe41ac5d782ba04bd07ac390bcc538f9889",
+    "permissions": [
+      {
+        "zone": "",
+        "role": ""
+      }
+    ],
+    "lastModification": {
+      "actor": "MPS",
+      "timestamp": "2024-06-18T00:26:51Z"
+    },
+    "parameters": [
+      {
+        "type": "Parameter",
+        "identifier": "Source",
+        "sqlType": 7
+      },
+      {
+        "type": "Parameter",
+        "identifier": "Destination1",
+        "sqlType": 7
+      },
+      {
+        "type": "Parameter",
+        "identifier": "Destination2",
+        "sqlType": 7
+      },
+      {
+        "type": "Parameter",
+        "identifier": "PileNumber",
+        "sqlType": 7
+      },
+      {
+        "type": "Parameter",
+        "identifier": "Pos_id",
+        "sqlType": 3
+      }
+    ]
+  }
+}

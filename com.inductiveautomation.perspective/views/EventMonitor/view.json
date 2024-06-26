@@ -1,0 +1,128 @@
+{
+  "custom": {},
+  "params": {},
+  "props": {
+    "defaultSize": {
+      "height": 1080,
+      "width": 1920
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "EmbeddedView"
+        },
+        "position": {
+          "basis": "460px"
+        },
+        "props": {
+          "params": {
+            "script_steps": [
+              {
+                "description": "Source and destination ready..collecting data",
+                "name": 1
+              },
+              {
+                "description": "Data written on PLC",
+                "name": 2
+              },
+              {
+                "description": "Movement stored on transfer_test table",
+                "name": 3
+              },
+              {
+                "description": "Record  deleted",
+                "name": 4
+              },
+              {
+                "description": "Data sended to SFC",
+                "name": 5
+              }
+            ]
+          },
+          "path": "ScriptMonitor/Script_Monitor"
+        },
+        "type": "ia.display.view"
+      },
+      {
+        "meta": {
+          "name": "EmbeddedView_0"
+        },
+        "position": {
+          "grow": 1
+        },
+        "props": {
+          "params": {
+            "chart_path": "INFEED_TC_MOVE",
+            "chart_steps": [
+              {
+                "description": "Transfer Doors array in source pile to Transfer Cart",
+                "name": "S1"
+              },
+              {
+                "description": "In_Source Source-PLCTOSM/TC-SMTOPLC",
+                "name": "S2"
+              },
+              {
+                "description": "In_Source TC-PLSTOSM/Source-SMTOPLC",
+                "name": "S3"
+              },
+              {
+                "description": "RollRun SourcePLCTOSM/ TC-SMTOPLC",
+                "name": "S4"
+              },
+              {
+                "description": "RollRun TC-PLCTOSM/ Source-SMTOPLC",
+                "name": "S5"
+              },
+              {
+                "description": "Reset TC\u0027s Door Array to Empty",
+                "name": "S6"
+              },
+              {
+                "description": "Update pile location stored procedure",
+                "name": "S7"
+              },
+              {
+                "description": "Transfer Array  TC to Destination ",
+                "name": "S8"
+              },
+              {
+                "description": "If pile No \u003d -1 Reset  Dest Door Array to Empty",
+                "name": "S9"
+              },
+              {
+                "description": "In_Dest Dest-PLCTOSM/TC-SMTOPLC",
+                "name": "S10"
+              },
+              {
+                "description": "In_Dest TC-PLSTOSM/Dest-SMTOPLC",
+                "name": "S11"
+              },
+              {
+                "description": "RollRun Dest PLCTOSM/ TC-SMTOPLC",
+                "name": "S12"
+              },
+              {
+                "description": "RollRun TC-PLCTOSM/ Dest-SMTOPLC",
+                "name": "S13"
+              },
+              {
+                "description": "Reset SMTOPLC TC Tags and ParkLocation to 0",
+                "name": "S14"
+              }
+            ],
+            "pollRateScripts": 1000
+          },
+          "path": "SFCMonitor/SFC_Monitor"
+        },
+        "type": "ia.display.view"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "type": "ia.container.flex"
+  }
+}
