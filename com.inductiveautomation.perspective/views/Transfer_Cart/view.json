@@ -44,6 +44,61 @@
     "children": [
       {
         "meta": {
+          "name": "ViewCanvas"
+        },
+        "position": {
+          "height": 78,
+          "width": 1810,
+          "x": 0.84,
+          "y": 231.66
+        },
+        "propConfig": {
+          "props.instances[0].left": {
+            "binding": {
+              "config": {
+                "expression": "({[default]PressIF_TransferCart/TC_AGTC/TransComm/ActualPosition_PLCTOSM}-16632)/24.15"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "instances": [
+            {
+              "bottom": "auto",
+              "height": "auto",
+              "position": "absolute",
+              "right": "auto",
+              "style": {
+                "classes": ""
+              },
+              "top": "0px",
+              "viewParams": {
+                "DoorColor": "#986e22",
+                "Label": "Infeed",
+                "RollerColor": "#D2E9E9",
+                "TagPath": "[default]PressIF_TransferCart/TC_AGTC",
+                "TextColor": "#000000",
+                "pile": "9"
+              },
+              "viewPath": "Templates/RollerBed_TCCart",
+              "width": "auto",
+              "zIndex": "auto"
+            }
+          ],
+          "style": {
+            "borderStyle": "solid",
+            "borderWidth": 0.005
+          },
+          "transitionSettings": {
+            "duration": "5s",
+            "timingFunction": "linear"
+          }
+        },
+        "type": "ia.display.viewcanvas"
+      },
+      {
+        "meta": {
           "name": "CoordinateContainer_5"
         },
         "position": {
@@ -66,16 +121,16 @@
           "name": "CoordinateContainer_6"
         },
         "position": {
-          "height": 95,
+          "height": 107,
           "width": 195,
-          "x": 409.195,
-          "y": 17.045
+          "x": 409.19,
+          "y": 5.05
         },
         "propConfig": {
           "meta.visible": {
             "binding": {
               "config": {
-                "path": "../parkLocationVisible.props.selected"
+                "path": "../SetParkLocation.props.selected"
               },
               "type": "property"
             }
@@ -615,32 +670,6 @@
             "RollerColor": "#A9A9A9",
             "TagPath": "[default]Press_Infeed/AGTC_FPA3_13",
             "pile": "8"
-          },
-          "path": "Templates/RollerBed_TC"
-        },
-        "type": "ia.display.view"
-      },
-      {
-        "meta": {
-          "name": "RollerBed_14"
-        },
-        "position": {
-          "height": 88,
-          "rotate": {
-            "angle": 90
-          },
-          "width": 74.99999999999999,
-          "x": 85.97704999999999,
-          "y": 299.9882
-        },
-        "props": {
-          "params": {
-            "DoorColor": "#986e22",
-            "Label": "FPA4_11",
-            "RollerColor": "#D2E9E9",
-            "TagPath": "[default]Press_Backfill_RB/AGTC_FPA4_11",
-            "TextColor": "#000000",
-            "pile": "9"
           },
           "path": "Templates/RollerBed_TC"
         },
@@ -1545,6 +1574,33 @@
           "virtualized": false
         },
         "type": "ia.display.table"
+      },
+      {
+        "meta": {
+          "name": "RollerBed_11"
+        },
+        "position": {
+          "height": 88,
+          "rotate": {
+            "anchor": "203% 25%",
+            "angle": 90
+          },
+          "width": 75,
+          "x": 68.7477,
+          "y": 439.131
+        },
+        "props": {
+          "params": {
+            "DoorColor": "#986e22",
+            "Label": "FPA6_12",
+            "RollerColor": "#D2E9E9",
+            "TagPath": "[default]Press_Backfill_RB/AGTC_FPA6_12",
+            "TextColor": "#000000",
+            "pile": "9"
+          },
+          "path": "Templates/RollerBed_TC"
+        },
+        "type": "ia.display.view"
       },
       {
         "meta": {
@@ -3344,98 +3400,25 @@
         "type": "ia.input.button"
       },
       {
-        "meta": {
-          "name": "ViewCanvas"
-        },
-        "position": {
-          "height": 78,
-          "width": 1810,
-          "x": 0.84,
-          "y": 231.66
-        },
-        "propConfig": {
-          "props.instances[0].left": {
-            "binding": {
+        "events": {
+          "component": {
+            "onActionPerformed": {
               "config": {
-                "expression": "({[default]testPosCart}-16632)/24.15"
+                "script": "\tvalor\u003dsystem.tag.readBlocking([\u0027[default]PressIF_TransferCart/TC_AGTC/TransComm/ParkLocation_SMTOPLC\u0027])[0].value\n\ttotal\u003d(valor-15831.53)/435.26\n\tself.getSibling(\"Infeed\").props.value \u003d total\n\tsystem.perspective.print(total)"
               },
-              "type": "expr"
-            }
-          },
-          "props.instances[1].left": {
-            "binding": {
-              "config": {
-                "expression": "({[default]PressIF_TransferCart/TC_AGTC/TransComm/ActualPosition_PLCTOSM}-16632)/24.15"
-              },
-              "type": "expr"
+              "scope": "G",
+              "type": "script"
             }
           }
         },
-        "props": {
-          "instances": [
-            {
-              "bottom": "auto",
-              "height": "auto",
-              "position": "absolute",
-              "right": "auto",
-              "style": {
-                "classes": ""
-              },
-              "top": "0px",
-              "viewParams": {
-                "DoorColor": "#986e22",
-                "Label": "Outfeed",
-                "RollerColor": "#D2E9E9",
-                "TagPath": "[default]PressOF_TransferCart/TC_AGTC",
-                "TextColor": "#000000",
-                "pile": "9"
-              },
-              "viewPath": "Templates/RollerBed_TCCart",
-              "width": "auto",
-              "zIndex": "auto"
-            },
-            {
-              "bottom": "auto",
-              "height": "auto",
-              "position": "absolute",
-              "right": "auto",
-              "style": {
-                "classes": ""
-              },
-              "top": "0px",
-              "viewParams": {
-                "DoorColor": "#986e22",
-                "Label": "Infeed",
-                "RollerColor": "#D2E9E9",
-                "TagPath": "[default]PressIF_TransferCart/TC_AGTC",
-                "TextColor": "#000000",
-                "pile": "9"
-              },
-              "viewPath": "Templates/RollerBed_TCCart",
-              "width": "auto",
-              "zIndex": "auto"
-            }
-          ],
-          "style": {
-            "borderStyle": "solid",
-            "borderWidth": 0.005
-          },
-          "transitionSettings": {
-            "duration": "5s",
-            "timingFunction": "linear"
-          }
-        },
-        "type": "ia.display.viewcanvas"
-      },
-      {
         "meta": {
-          "name": "parkLocationVisible"
+          "name": "SetParkLocation"
         },
         "position": {
-          "height": 36,
+          "height": 35,
           "width": 201,
-          "x": 406.2775,
-          "y": 17.25125
+          "x": 403.1735,
+          "y": 5.393755
         },
         "props": {
           "label": {
@@ -3443,63 +3426,6 @@
           }
         },
         "type": "ia.input.toggle-switch"
-      },
-      {
-        "meta": {
-          "name": "Label_5"
-        },
-        "position": {
-          "height": 32,
-          "rotate": {
-            "anchor": "0% 75%"
-          },
-          "width": 146,
-          "x": 409.0765,
-          "y": 52.3825
-        },
-        "propConfig": {
-          "meta.visible": {
-            "binding": {
-              "config": {
-                "path": "../parkLocationVisible.props.selected"
-              },
-              "type": "property"
-            }
-          }
-        },
-        "props": {
-          "text": " Infeed TC Park :"
-        },
-        "type": "ia.display.label"
-      },
-      {
-        "meta": {
-          "name": "Label_6"
-        },
-        "position": {
-          "height": 32,
-          "rotate": {
-            "anchor": "0% 63%"
-          },
-          "width": 138,
-          "x": 408.7625,
-          "y": 80.11375
-        },
-        "propConfig": {
-          "meta.visible": {
-            "binding": {
-              "config": {
-                "bidirectional": true,
-                "path": "../parkLocationVisible.props.selected"
-              },
-              "type": "property"
-            }
-          }
-        },
-        "props": {
-          "text": " Outfeed TC Park:"
-        },
-        "type": "ia.display.label"
       },
       {
         "events": {
@@ -3588,74 +3514,40 @@
         "type": "ia.input.button"
       },
       {
-        "events": {
-          "component": {
-            "onInstanceClicked": {
-              "config": {
-                "script": "\tpos \u003d event.position.left\n\tindex \u003d event.index\n\tname \u003d event.params.get(\"name\")\n\tself.getSibling(\"Slider\").props.value \u003d pos\n\tself.getSibling(\"Slider\").custom.instance \u003d index\n\tself.view.params.instance_position \u003d pos\n\tself.view.params.instance_name \u003d name"
-              },
-              "scope": "G",
-              "type": "script"
-            }
-          }
-        },
         "meta": {
-          "name": "ViewCanvas_1"
+          "name": "ViewCanvas_0"
         },
         "position": {
-          "height": 38,
-          "x": 2,
-          "y": 256
-        },
-        "propConfig": {
-          "meta.visible": {
-            "binding": {
-              "config": {
-                "path": "../parkLocationVisible.props.selected"
-              },
-              "type": "property"
-            }
-          },
-          "position.width": {
-            "binding": {
-              "config": {
-                "expression": "{view.params.max} + {view.params.instance_width}"
-              },
-              "type": "expr"
-            }
-          },
-          "props.instances[0].left": {
-            "onChange": {
-              "enabled": null,
-              "script": "\tsystem.tag.writeBlocking(\u0027[default]PressIF_TransferCart/TC_AGTC/TransComm/ParkLocation_SMTOPLC\u0027, (int(currentValue.value)*23.15)+1664)"
-            }
-          }
+          "height": 34,
+          "width": 1810,
+          "x": -39.80250152587891,
+          "y": 270.97000915527343
         },
         "props": {
           "instances": [
             {
               "bottom": "auto",
               "height": "auto",
-              "left": 0,
+              "left": "0px",
               "position": "absolute",
               "right": "auto",
               "style": {
+                "backgroundColor": "#00000000",
                 "classes": ""
               },
-              "top": 0,
+              "top": "0px",
               "viewParams": {
-                "height": 30,
-                "name": " infeed",
-                "width": 72
+                "color": "#00000000",
+                "name": ""
               },
-              "viewPath": "Templates/sliderPark",
+              "viewPath": "Templates/slider1",
               "width": "auto",
               "zIndex": "auto"
             },
             {
               "bottom": "auto",
               "height": "auto",
-              "left": 1534,
+              "left": 150,
               "position": "absolute",
               "right": "auto",
               "style": {
@@ -3663,31 +3555,29 @@
               },
               "top": "0px",
               "viewParams": {
-                "height": 30,
-                "name": "Outfeed",
-                "width": 72
+                "color": "#00000000",
+                "name": ""
               },
-              "viewPath": "Templates/sliderPark",
+              "viewPath": "Templates/slider1",
               "width": "auto",
               "zIndex": "auto"
             }
           ],
           "transitionSettings": {
-            "duration": "30ms",
+            "duration": "1s",
             "timingFunction": "linear"
-          }
+          },
+          "useDefaultViewHeight": false,
+          "useDefaultViewWidth": false
         },
         "type": "ia.display.viewcanvas"
       },
       {
-        "custom": {
-          "instance": 0
-        },
         "events": {
-          "component": {
-            "onActionPerformed": {
+          "dom": {
+            "onMouseUp": {
               "config": {
-                "script": "\tvalue \u003d self.props.value\n\tinstance \u003d self.custom.instance\n\tself.getSibling(\"ViewCanvas_1\").props.instances[instance].left \u003d value\n\tself.view.params.instance_position \u003d value"
+                "script": "\tvalue\u003d(self.props.value*435.26)+15831.53\n\tsystem.tag.writeBlocking([\u0027[default]PressIF_TransferCart/TC_AGTC/TransComm/ParkLocation_SMTOPLC\u0027],[value])"
               },
               "scope": "G",
               "type": "script"
@@ -3695,159 +3585,217 @@
           }
         },
         "meta": {
-          "name": "Slider"
+          "name": "Infeed"
         },
         "position": {
           "height": 31,
-          "x": 37.07,
-          "y": 232.04
+          "width": 1808,
+          "x": 1.77,
+          "y": 216.07
         },
         "propConfig": {
           "meta.visible": {
             "binding": {
               "config": {
-                "path": "../parkLocationVisible.props.selected"
-              },
-              "type": "property"
-            }
-          },
-          "position.width": {
-            "binding": {
-              "config": {
-                "expression": "{view.params.max}"
+                "expression": "{../SetParkLocation.props.selected}\u0026\u0026{../Dropdown.props.value}\u003d0"
               },
               "type": "expr"
             }
+          }
+        },
+        "props": {
+          "handleColor": "#08EA21",
+          "labels": {
+            "interval": 10
           },
-          "position.x": {
+          "railColor": "#E62525",
+          "step": 0.1,
+          "trackColor": "#E62525"
+        },
+        "type": "ia.input.slider"
+      },
+      {
+        "events": {
+          "dom": {
+            "onMouseUp": {
+              "config": {
+                "script": "\t#value\u003d(self.props.value*419.37)+16615\n\t#system.tag.writeBlocking([\u0027[default]parkLocationTest\u0027],[value])\n\tpass"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "Outfeed"
+        },
+        "position": {
+          "height": 31,
+          "width": 1745,
+          "x": 32.77,
+          "y": 216.07
+        },
+        "propConfig": {
+          "meta.visible": {
             "binding": {
               "config": {
-                "expression": "{../ViewCanvas.position.x} + ({view.params.instance_width}/2)"
+                "expression": "{../SetParkLocation.props.selected}\u0026\u0026{../Dropdown.props.value}\u003d1"
               },
-              "enabled": false,
               "type": "expr"
             }
+          }
+        },
+        "props": {
+          "handleColor": "#08EA21",
+          "labels": {
+            "interval": 10
           },
-          "props.enabled": {
+          "railColor": "#E6D725",
+          "step": 0.1,
+          "trackColor": "#E6D725",
+          "value": 48.1
+        },
+        "type": "ia.input.slider"
+      },
+      {
+        "meta": {
+          "name": "Dropdown"
+        },
+        "position": {
+          "height": 36,
+          "width": 194,
+          "x": 409.19,
+          "y": 40.55
+        },
+        "propConfig": {
+          "meta.visible": {
             "binding": {
               "config": {
-                "expression": "if({this.custom.instance} \u003d null, False, True)"
-              },
-              "type": "expr"
-            }
-          },
-          "props.max": {
-            "binding": {
-              "config": {
-                "path": "view.params.max"
-              },
-              "type": "property"
-            }
-          },
-          "props.min": {
-            "binding": {
-              "config": {
-                "path": "view.params.min"
+                "path": "../SetParkLocation.props.selected"
               },
               "type": "property"
             }
           }
         },
         "props": {
-          "handleColor": "#FF0016",
-          "railColor": "#C0C0C000",
-          "trackColor": "#C0C0C000"
+          "options": [
+            {
+              "label": "Infeed",
+              "value": 0
+            },
+            {
+              "label": "Outfeed",
+              "value": 1
+            }
+          ],
+          "value": 0
         },
-        "type": "ia.input.slider"
+        "type": "ia.input.dropdown"
       },
       {
         "meta": {
-          "name": "NumericEntryField"
+          "name": "infeedPark"
         },
         "position": {
-          "height": 28,
-          "width": 59,
-          "x": 545.6575,
-          "y": 57.0675
+          "height": 32,
+          "width": 68,
+          "x": 537.02,
+          "y": 80.05
         },
         "propConfig": {
           "meta.visible": {
             "binding": {
               "config": {
-                "path": "../parkLocationVisible.props.selected"
+                "expression": "{../SetParkLocation.props.selected}\u0026\u0026{../Dropdown.props.value}\u003d0"
               },
-              "type": "property"
+              "type": "expr"
             }
           },
-          "props.value": {
+          "props.text": {
             "binding": {
               "config": {
                 "fallbackDelay": 2.5,
                 "mode": "direct",
                 "tagPath": "[default]PressIF_TransferCart/TC_AGTC/TransComm/ParkLocation_SMTOPLC"
               },
-              "transforms": [
-                {
-                  "expression": "{value}",
-                  "type": "expression"
-                }
-              ],
               "type": "tag"
             }
           }
         },
-        "type": "ia.input.numeric-entry-field"
+        "type": "ia.display.label"
       },
       {
         "meta": {
-          "name": "NumericEntryField_0"
+          "name": "outfeedPark"
         },
         "position": {
-          "height": 27,
-          "width": 59,
-          "x": 545.0575,
-          "y": 85.0675
+          "height": 32,
+          "width": 68,
+          "x": 537.02,
+          "y": 80.05
         },
         "propConfig": {
           "meta.visible": {
             "binding": {
               "config": {
-                "path": "../parkLocationVisible.props.selected"
+                "expression": "{../SetParkLocation.props.selected}\u0026\u0026{../Dropdown.props.value}\u003d1"
               },
-              "type": "property"
+              "type": "expr"
             }
-          },
-          "props.value": {
+          }
+        },
+        "props": {
+          "text": 0
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "Label_5"
+        },
+        "position": {
+          "height": 33,
+          "width": 118,
+          "x": 414.188,
+          "y": 79.0469
+        },
+        "propConfig": {
+          "meta.visible": {
             "binding": {
               "config": {
-                "path": "../ViewCanvas_1.props.instances[1].left"
+                "path": "../SetParkLocation.props.selected"
               },
               "type": "property"
             }
           }
         },
-        "type": "ia.input.numeric-entry-field"
+        "props": {
+          "text": "Current Park Loc.",
+          "textStyle": {
+            "fontSize": 14
+          }
+        },
+        "type": "ia.display.label"
       },
       {
         "meta": {
-          "name": "RollerBed_11"
+          "name": "RollerBed_14"
         },
         "position": {
           "height": 88,
           "rotate": {
-            "anchor": "203% 25%",
             "angle": 90
           },
-          "width": 75,
-          "x": 68.7477,
-          "y": 439.131
+          "width": 74.99999999999999,
+          "x": 85.97704999999999,
+          "y": 299.9882
         },
         "props": {
           "params": {
             "DoorColor": "#986e22",
-            "Label": "FPA6_12",
+            "Label": "FPA4_11",
             "RollerColor": "#D2E9E9",
-            "TagPath": "[default]Press_Backfill_RB/AGTC_FPA6_12",
+            "TagPath": "[default]Press_Backfill_RB/AGTC_FPA4_11",
             "TextColor": "#000000",
             "pile": "9"
           },
@@ -3875,8 +3823,8 @@
       "name": "root"
     },
     "position": {
-      "x": -13.671875,
-      "y": -5.6875
+      "x": 110.9375,
+      "y": 11.96875
     },
     "props": {
       "pipes": [

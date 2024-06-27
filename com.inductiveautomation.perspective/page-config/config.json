@@ -47,7 +47,7 @@
     },
     "/transfer_cart": {
       "title": "Transfer Cart",
-      "viewPath": "Transfer_Cart (1)"
+      "viewPath": "Transfer_Cart"
     },
     "/user": {
       "title": "",
