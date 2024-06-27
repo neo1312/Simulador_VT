@@ -16,9 +16,9 @@
     "enabled": true,
     "cacheAmount": 1,
     "cacheEnabled": false,
-    "database": "",
+    "database": "Sample_SQLite_Database",
     "fallbackEnabled": false,
-    "lastModificationSignature": "e57909c4d8e5cb0da4e6df041bf08b972a1a9ed11f60fb3793e93dc9762617f0",
+    "lastModificationSignature": "a0cf05ebce324789a8a394b08d02767d5373c91647eebebd526ea151627d5b13",
     "permissions": [
       {
         "zone": "",
@@ -27,7 +27,7 @@
     ],
     "lastModification": {
       "actor": "MPS",
-      "timestamp": "2024-06-11T15:11:27Z"
+      "timestamp": "2024-06-27T13:02:43Z"
     }
   }
 }
