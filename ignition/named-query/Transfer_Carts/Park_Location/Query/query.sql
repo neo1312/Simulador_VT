@@ -1,0 +1,2 @@
+SELECT * 
+from TC_PARK_LOCATION_LOG

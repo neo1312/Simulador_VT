@@ -1,3 +1,4 @@
+
 CREATE TABLE VT_TC_TRANSFERS(
    Id INTEGER PRIMARY KEY   AUTOINCREMENT,
    SOURCE varchar(250),
@@ -12,4 +13,3 @@ CREATE TABLE VT_TC_TRANSFERS(
    D_PATH varchar(250),
    TimeStamp TimeStamp
 );
-

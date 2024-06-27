@@ -1,22 +1,22 @@
 <?xml version="1.0" ?>
-<sfc zoom="0.49999988" canvas="52 47" execution-mode="Callable" hot-editable="false" persist-state="true" redundant-sync="false">
+<sfc zoom="0.49999988" canvas="52 51" execution-mode="Callable" hot-editable="false" persist-state="true" redundant-sync="false">
 	<onstart>def onStart(chart): # WARNING: This resource was generated in a newer version of Ignition. For the best editing experience, recreate it in the current version.
-	#chart['state'] = chart.state
-	#SFCMonitor.insert_data(chart)
-	pass</onstart>
+	chart['state'] = chart.state
+	SFCMonitor.insert_data(chart)</onstart>
 	<onstop>def onStop(chart): # WARNING: This resource was generated in a newer version of Ignition. For the best editing experience, recreate it in the current version.
-	#chart['state'] = chart.state
-	#SFCMonitor.insert_data(chart)
-	pass</onstop>
+	chart['state'] = chart.state
+	SFCMonitor.insert_data(chart)</onstop>
 	<oncancel>def onCancel(chart): # WARNING: This resource was generated in a newer version of Ignition. For the best editing experience, recreate it in the current version.
-	#chart['state'] = chart.state
-	#SFCMonitor.insert_data(chart)
-	#Functions.reset_TC_tags(chart.tc_path)
-	pass</oncancel>
+	chart['state'] = chart.state
+	SFCMonitor.insert_data(chart)
+	Functions.reset_TC_tags(chart.tc_path)</oncancel>
 	<onabort>def onAbort(chart): # WARNING: This resource was generated in a newer version of Ignition. For the best editing experience, recreate it in the current version.
-	#chart['state'] = chart.state
-	#SFCMonitor.insert_data(chart)
-	pass</onabort>
+	chart['state'] = chart.state
+	SFCMonitor.insert_data(chart)
+	#Create a logger. Use the path of the chart so each chart will use separate loggers
+	logger = system.util.getLogger("SFC_Infeed_TC_Move_Logger")
+	#Invoke the logger. Use chart.abortCause to report the issue
+	logger.error("Chart Aborted. Reason: %s" % (chart.abortCause))</onabort>
 	<step id="e1ba1c35-fd1c-4aa7-a8dc-c0fa73bcb067" location="5 0" name="__begin" factory-id="begin-step">
 <parameters>
 	<parameter><name>sourcepath</name><expression>'test'</expression></parameter>
@@ -25,19 +25,28 @@
 	<parameter><name>Pos_error</name><expression>10</expression></parameter>
 	<parameter><name>source_auto_state</name><expression>0</expression></parameter>
 	<parameter><name>dest_auto_state</name><expression>0</expression></parameter>
-	<parameter><name>is_populated</name><expression>1
+	<parameter><name>is_populated</name><expression>true
 </expression></parameter>
+	<parameter><name>movement_ready</name><expression>0</expression></parameter>
+	<parameter><name>park_loc</name><expression>0</expression></parameter>
 </parameters>
 	</step>
 	<step id="e86716a8-079f-415f-952a-be96900738bb" location="11 9" name="S1" factory-id="action-step">
 		<start-script>def onStart(chart, step): # WARNING: This resource was generated in a newer version of Ignition. For the best editing experience, recreate it in the current version.
-	Functions.transfer_array_data(chart.sourcepath,chart.tc_path,1)
-	#chart['state'] = chart.state
-	#SFCMonitor.insert_data(chart)</start-script>
+	try:
+		Functions.transfer_array_data(chart.sourcepath,chart.tc_path,1)
+		chart['state'] = chart.state
+		SFCMonitor.insert_data(chart)
+	except Exception as e:
+		logger = system.util.getLogger("SFC_IN_S1_Logger")
+		#Invoke the logger. Use chart.abortCause to report the issue
+		step = Functions.get_step_name('INFEED_TC_MOVE')
+		logger.error("Chart Errors Reason: %s" % (e))
+		Functions.sfc_add_log(e,step)</start-script>
 	</step>
 	<step id="ccc251b5-04e9-4747-b161-b2a81b2faf73" location="11 25" name="S2" factory-id="action-step">
 		<start-script>def onStart(chart, step): # WARNING: This resource was generated in a newer version of Ignition. For the best editing experience, recreate it in the current version.
-	import time
+	#import time
 	#task1
 	path = chart.sourcepath + '/TransComm/InSourcePos_SMTOPLC'
 	curValue = system.tag.read(path)
@@ -62,45 +71,72 @@
 	newValue = system.tag.read(chart.sourcepath + '/TransComm/SourceRollRun_PLCTOSM').value
 	if curValue != newValue:
 		system.tag.write(path, newValue)	
-	time.sleep(0.25)</start-script>
+	#time.sleep(0.25)</start-script>
 	</step>
-	<step id="c2634a8c-b7b3-4391-8a4e-61f24ee29831" location="13 35" name="S3" factory-id="action-step">
+	<step id="c2634a8c-b7b3-4391-8a4e-61f24ee29831" location="13 36" name="S3" factory-id="action-step">
 		<start-script>def onStart(chart, step): # WARNING: This resource was generated in a newer version of Ignition. For the best editing experience, recreate it in the current version.
-	Functions.reset_source(chart.sourcepath)</start-script>
+	try:
+		Functions.reset_source(chart.sourcepath)
+	except Exception as e:
+		logger = system.util.getLogger("SFC_IN_S3_Logger")
+		#Invoke the logger. Use chart.abortCause to report the issue
+		step = Functions.get_step_name('INFEED_TC_MOVE')
+		logger.error("Chart Errors Reason: %s" % (e))
+		Functions.sfc_add_log(e, step)</start-script>
 	</step>
-	<step id="a16c9e8f-2d0a-49eb-a759-bb8b66a98f3f" location="37 10" name="S5" factory-id="action-step">
+	<step id="433faa11-f629-4542-b804-77475b700583" location="37 10" name="S5" factory-id="action-step">
 		<start-script>def onStart(chart, step): # WARNING: This resource was generated in a newer version of Ignition. For the best editing experience, recreate it in the current version.
-	#tagpath = chart.sourcepath
-	#original = tagpath.split('[default]Press_Infeed/AGTC_')
-	#location = original[1]
-	#pile = system.tag.read(chart.tc_path + '/Door/Door_0/PileNumber').value
-	#serial = system.tag.read(tagpath + '/Door/Door_0/Serial').value
-	#sequence = 1
-	#pileSequence = system.tag.read('[default]Press_Infeed/DF_Pile_Sequence').value
-	#Functions.Perform_SP_Query(serial, location, sequence, pile, pileSequence)
-	pass</start-script>
+	try:
+		Functions.transfer_array_data(chart.tc_path,chart.destinationpath,1)
+	except Exception as e:
+		logger = system.util.getLogger("SFC_IN_S5_Logger")
+		#Invoke the logger. Use chart.abortCause to report the issue
+		step = Functions.get_step_name('INFEED_TC_MOVE')
+		logger.error("Chart Errors Reason: %s" % (e))
+		Functions.sfc_add_log(e, step)</start-script>
 	</step>
-	<step id="433faa11-f629-4542-b804-77475b700583" location="37 12" name="S6" factory-id="action-step">
+	<step id="abe88f94-67b0-4b00-9162-9d9fc58cda94" location="37 13" name="S6" factory-id="action-step">
 		<start-script>def onStart(chart, step): # WARNING: This resource was generated in a newer version of Ignition. For the best editing experience, recreate it in the current version.
-	Functions.transfer_array_data(chart.tc_path,chart.destinationpath,1)</start-script>
-	</step>
-	<step id="abe88f94-67b0-4b00-9162-9d9fc58cda94" location="37 14" name="S7" factory-id="action-step">
-		<start-script>def onStart(chart, step): # WARNING: This resource was generated in a newer version of Ignition. For the best editing experience, recreate it in the current version.
-	chart.is_populated=Functions.is_populated(chart.destinationpath)</start-script>
+	try:
+		chart.is_populated=Functions.is_populated(chart.destinationpath)
+		if chart.is_populated == True:
+			chart.is_populated = True
+		elif chart.is_populated == False:
+			chart.is_populated = True
+			logger = system.util.getLogger("Populated_NOT_working")
+			logger.error("Chart Errors Reason")
+	except Exception as e:
+		logger = system.util.getLogger("SFC_IN_S6_Logger")
+		#Invoke the logger. Use chart.abortCause to report the issue
+		step = Functions.get_step_name('INFEED_TC_MOVE')
+		logger.error("Chart Errors Reason: %s" % (e))
+		Functions.sfc_add_log(e, step)</start-script>
 	</step>
 	<step id="9c1f5a43-e6d3-459e-ae15-1d6caea3ee6c" location="25 33" name="S4" factory-id="action-step">
 		<start-script>def onStart(chart, step): # WARNING: This resource was generated in a newer version of Ignition. For the best editing experience, recreate it in the current version.
-	Functions.write_array_zero(1,50,chart.tc_path)</start-script>
+	try:
+		Functions.write_array_zero(1,50,chart.tc_path)
+	except Exception as e:
+		logger = system.util.getLogger("SFC_IN_S4_Logger")
+		#Invoke the logger. Use chart.abortCause to report the issue
+		step = Functions.get_step_name('INFEED_TC_MOVE')
+		logger.error("Chart Errors Reason: %s" % (e))
+		Functions.sfc_add_log(e, step)</start-script>
 	</step>
-	<step id="afee9c8f-d33e-4108-8e66-9dcc40f3b963" location="37 19" name="S8" factory-id="action-step">
+	<step id="afee9c8f-d33e-4108-8e66-9dcc40f3b963" location="37 19" name="S7" factory-id="action-step">
 		<start-script>def onStart(chart, step): # WARNING: This resource was generated in a newer version of Ignition. For the best editing experience, recreate it in the current version.
-	#Functions.clean_array_1(destinationpath)
-	pass
-	</start-script>
+	try:
+		Functions.clean_array_1(chart.destinationpath,1)
+	except Exception as e:
+		logger = system.util.getLogger("SFC_IN_S7_Logger")
+		#Invoke the logger. Use chart.abortCause to report the issue
+		step=Functions.get_step_name('INFEED_TC_MOVE')
+		logger.error("Chart Errors Reason: %s" % (e))
+		Functions.sfc_add_log(e,step)</start-script>
 	</step>
-	<step id="420f268a-796d-43b8-b082-5f3f87de1818" location="37 27" name="S9" factory-id="action-step">
+	<step id="420f268a-796d-43b8-b082-5f3f87de1818" location="37 27" name="S8" factory-id="action-step">
 		<start-script>def onStart(chart, step): # WARNING: This resource was generated in a newer version of Ignition. For the best editing experience, recreate it in the current version.
-	import time
+	#import time
 	#task1
 	path =  chart.destinationpath + '/TransComm/InDestPos_SMTOPLC'
 	curValue = system.tag.read(path)
@@ -125,23 +161,37 @@
 	newValue = system.tag.read(chart.destinationpath + '/TransComm/DestRollRun_PLCTOSM').value
 	if curValue != newValue:
 		system.tag.write(path, newValue)
-	time.sleep(0.25)</start-script>
+	#time.sleep(0.25)</start-script>
 	</step>
-	<step id="70428ac6-cc06-4a0c-8da3-8ca113a97bf7" location="38 37" name="S10" factory-id="action-step">
+	<step id="70428ac6-cc06-4a0c-8da3-8ca113a97bf7" location="38 37" name="S9" factory-id="action-step">
 		<start-script>def onStart(chart, step): # WARNING: This resource was generated in a newer version of Ignition. For the best editing experience, recreate it in the current version.
-	Functions.reset_dest(chart.destinationpath)</start-script>
+	try:	
+		Functions.reset_dest(chart.destinationpath)
+	except Exception as e:
+		logger = system.util.getLogger("SFC_IN_S9_Logger")
+		#Invoke the logger. Use chart.abortCause to report the issue
+		step = Functions.get_step_name('INFEED_TC_MOVE')
+		logger.error("Chart Errors Reason: %s" % (e))
+		Functions.sfc_add_log(e, step)</start-script>
 	</step>
-	<step id="06fa0ec7-3ca0-471f-8198-2906bc724e22" location="38 41" name="S11" factory-id="action-step">
+	<step id="06fa0ec7-3ca0-471f-8198-2906bc724e22" location="38 41" name="S10" factory-id="action-step">
 		<start-script>def onStart(chart, step): # WARNING: This resource was generated in a newer version of Ignition. For the best editing experience, recreate it in the current version.
-	Functions.reset_TC_tags(chart.tc_path)</start-script>
+	try:
+		Functions.reset_TC_tags(chart.tc_path)
+	except Exception as e:
+		logger = system.util.getLogger("SFC_IN_10_Logger")
+		#Invoke the logger. Use chart.abortCause to report the issue
+		step = Functions.get_step_name('INFEED_TC_MOVE')
+		logger.error("Chart Errors Reason: %s" % (e))
+		Functions.sfc_add_log(e, step)</start-script>
 	</step>
-	<step id="3841f700-52e7-4f95-8217-ae9b14904ad2" location="38 44" name="__end1" factory-id="end-step">	</step>
+	<step id="3841f700-52e7-4f95-8217-ae9b14904ad2" location="38 43" name="__end1" factory-id="end-step">	</step>
 	<transition id="167c1cb5-3869-4114-b534-e793b0664b31" location="3 3">{source_auto_state} = 0</transition>
 	<transition id="ddc56080-95c5-4990-ad92-71fc7db589be" location="8 3">{source_auto_state}=1</transition>
 	<transition id="ed7e4e4e-a7ed-4314-8d26-1f3657b1c211" location="11 6">tag({tc_path} + '/TransComm/InSourcePos_PLCTOSM')</transition>
 	<transition id="9f9c6292-0f0d-4d80-bc8e-b32fc3771d6a" location="0 16">tag({tc_path} + '/TransComm/ActualPosition_PLCTOSM') &gt;= tag({sourcepath} + '/Coordinate/X_Location') - {Pos_error} 
 </transition>
-	<transition id="ca079388-fba3-4eee-b125-3d591cee1067" location="11 13">tag({tc_path} + '/Door/Door_0/PileNumber') != ''
+	<transition id="ca079388-fba3-4eee-b125-3d591cee1067" location="11 15">tag({tc_path} + '/Door/Door_0/PileNumber') != ''
 
 
 </transition>
@@ -158,7 +208,7 @@
 	<transition id="29dbb2a4-0f2c-44ae-8bd3-c4527340702c" location="34 7">{source_auto_state} = 0</transition>
 	<transition id="c0a7ad53-ca79-43fd-aacd-a38e3ffb1b8b" location="37 7">{source_auto_state}=1</transition>
 	<transition id="78ce094f-314a-4d96-8e30-fd6528373dbf" location="25 29">tag({tc_path} + '/LocOccupied_PLCTOSM') = 0</transition>
-	<transition id="c71f63a6-ede3-4a7a-9fb2-c376bef3eac3" location="37 16">true</transition>
+	<transition id="c71f63a6-ede3-4a7a-9fb2-c376bef3eac3" location="37 16">{is_populated}</transition>
 	<transition id="3d76926d-ea07-4cdc-9ab5-617f5b35ebd8" location="37 35">tag({destinationpath} + '/LocOccupied_PLCTOSM') = 0</transition>
 	<transition id="4aa47f94-3414-4ff4-8617-fe0fb8fb676e" location="38 35">tag({destinationpath} + '/LocOccupied_PLCTOSM') = 1
 </transition>
@@ -170,24 +220,24 @@ Source and Destination paths are passed in from timer script</note>
 If TC/Source_is_autoSMTOPLC  = 1, Auto
 </note>
 	<note id="17ebf780-ce7a-45e4-86fb-9721138a4550" location="12 6" size="11 1">TransferCart/TransComm/InSourcePos_PLCTOSM = 1</note>
-	<note id="9620922f-ea1b-43e6-8179-a1ff4c6f2ced" location="12 9" size="11 1">Transfer Doors array in source pile to Transfer Cart</note>
+	<note id="9620922f-ea1b-43e6-8179-a1ff4c6f2ced" location="12 9" size="11 1">S1: Transfer Doors array in source pile to Transfer Cart</note>
 	<note id="b9bb6b65-4325-4b1a-b848-c8d57a52eb64" location="1 16" size="9 2">Check if {tc_path} + '/TransComm/ActualPosition_PLCTOSM is in 
 left side interval   </note>
-	<note id="ef45eb0a-6896-4068-a3a5-0236cf5ec4ce" location="12 12" size="11 2">Check pilenumber on first door of transfer cart to make
+	<note id="ef45eb0a-6896-4068-a3a5-0236cf5ec4ce" location="12 14" size="11 2">Check pilenumber on first door of transfer cart to make
 sure its populated</note>
 	<note id="67bb5856-0307-4a3b-8321-aa3b10bd5948" location="1 20" size="9 2">Check if  {tc_path} + '/TransComm/ActualPosition_PLCTOSM_SMTOPLC is in 
 right side interval   </note>
-	<note id="82adb17b-7175-4d87-8be5-79eecb822645" location="13 19" size="10 2">S2 - Set Value of Source/TransComm/InSourcePos_PLCTOSM ==
-Value of TC/TransComm/InSourcePos_PLCTOSM</note>
-	<note id="1352eadc-97d3-4a1c-af6d-9a96597204ce" location="13 21" size="10 2">S3 - Set Value of TC/TransComm/InSourcePos_SMTOPLC ==
-Value of Source/TransComm/InSourcePos_PLCTOSM</note>
-	<note id="7f6e15b6-3fd0-4f15-ab36-21fa73dce232" location="13 23" size="10 2">S4 - Set Value of Source/TransComm/SourceRollRun_SMTOPLC ==
-Value of TC/TransComm/SourceRollRun_PLCTOSM</note>
+	<note id="82adb17b-7175-4d87-8be5-79eecb822645" location="13 19" size="10 2">S2 Task 1 - Set Value of Source/TransComm/InSourcePos_PLCTOSM
+== Value of TC/TransComm/InSourcePos_PLCTOSM</note>
+	<note id="1352eadc-97d3-4a1c-af6d-9a96597204ce" location="13 21" size="10 2">S2 Task 2 - Set Value of TC/TransComm/InSourcePos_SMTOPLC 
+== Value of Source/TransComm/InSourcePos_PLCTOSM</note>
+	<note id="7f6e15b6-3fd0-4f15-ab36-21fa73dce232" location="13 23" size="10 2">S2 Task 3 - Set Value of Source/TransComm/SourceRollRun_SMTOPLC 
+== Value of TC/TransComm/SourceRollRun_PLCTOSM</note>
 	<note id="00e6dc78-d039-43ec-b591-7027069a982b" location="1 28" size="9 2">If TC/LocOccupied_PLCTOSM = 0, wait
 If TC/LocOccupied_PLCTOSM = 1, finish
 </note>
-	<note id="cbdc9b94-b7b5-4c9d-be3e-9e11867c09aa" location="13 25" size="10 2">S5 - Set Value of TC/TransComm/SourceRollRun_SMTOPLC ==
-Value of Source/TransComm/SourceRollRun_PLCTOSM</note>
+	<note id="cbdc9b94-b7b5-4c9d-be3e-9e11867c09aa" location="13 25" size="10 2">S2 Task 4 - Set Value of TC/TransComm/SourceRollRun_SMTOPLC 
+== Value of Source/TransComm/SourceRollRun_PLCTOSM</note>
 	<note id="7d0db286-f5a2-4a6d-8add-1812088b6c02" location="26 16" size="7 3">Check if  tc_path} + 
 '/TransComm/ActualPosition_PLCTOSM 
 is in left side interval   </note>
@@ -201,38 +251,35 @@ If TC/LocOccupied_PLCTOSM = 1, end loop
 If TC/Dest_is_autoSMTOPLC = 1, Auto 
 </note>
 	<note id="39d43d2b-185b-48b5-af96-56283fc697bf" location="35 4" size="10 1">TransferCart/TransComm/InDestPos_PLCTOSM = 1</note>
-	<note id="a5f101e8-bffe-4d67-8d17-b42e8b1c7228" location="14 35" size="9 1">Reset SMTOPLC source tags</note>
 	<note id="961bc7c4-2a51-417a-b406-ef948e283db9" location="26 28" size="9 2">If TC/LocOccupied_PLCTOSM = 1, wait
 If TC/LocOccupied_PLCTOSM = 0, finish
 </note>
 	<note id="b00d6bfe-c567-455d-bde2-8e8cb34d6dd6" location="38 6" size="9 3">Check source auto_state 
 0 = manual
 1 = auto</note>
-	<note id="841eac66-c28a-4477-ad40-4058e6a94046" location="38 10" size="9 1">Update pile location stored procedure
-</note>
-	<note id="ace1f337-b339-4e85-a984-6cbe15b3c04f" location="38 12" size="9 1">Transfer Doors array in transfer cart to destination array</note>
-	<note id="48a0949f-65a7-40a2-8f7f-df8313bdd3bb" location="38 14" size="9 1">write is_populated param
+	<note id="a5f101e8-bffe-4d67-8d17-b42e8b1c7228" location="14 36" size="9 1">S3: Reset SMTOPLC source tags</note>
+	<note id="ace1f337-b339-4e85-a984-6cbe15b3c04f" location="38 10" size="9 1">S5: Transfer Doors array in transfer cart to destination array</note>
+	<note id="48a0949f-65a7-40a2-8f7f-df8313bdd3bb" location="38 13" size="9 1">S6: write is_populated param
 </note>
 	<note id="1d3631e5-c8e2-4a9e-91da-539b9ad38dfb" location="38 16" size="9 2">Check pilenumber on first door of destination to make
 sure its populated</note>
-	<note id="e5877cc1-5d6d-457c-81bb-78a34f3ab9ac" location="26 33" size="9 1">Reset TC's Door Array to Empty</note>
-	<note id="877bc2ae-c720-41c0-b8e1-15908a848d7c" location="38 19" size="9 1">If pile No = -1 Reset  Dest Door Array to Empty</note>
-	<note id="b068cb5b-e33c-46a3-a782-f0b6a34a44a1" location="39 23" size="9 2">S10 - Set Value of Destination/TransComm/InSourcePos_PLCTOSM ==
-Value of TC/TransComm/InSourcePos_PLCTOSM</note>
-	<note id="30e74b6b-597c-4f51-99a5-03061d7a2d50" location="39 25" size="9 2">S11 - Set Value of TC/TransComm/InSourcePos_SMTOPLC ==
+	<note id="e5877cc1-5d6d-457c-81bb-78a34f3ab9ac" location="26 33" size="9 1">S4: Reset TC's Door Array to Empty</note>
+	<note id="877bc2ae-c720-41c0-b8e1-15908a848d7c" location="38 19" size="9 1">S7: If pile No = -1 Reset  Dest Door Array to Empty</note>
+	<note id="b068cb5b-e33c-46a3-a782-f0b6a34a44a1" location="39 23" size="10 2">S8 Task 1 - Set Value of Destination/TransComm/InSourcePos_PLCTOSM 
+== Value of TC/TransComm/InSourcePos_PLCTOSM</note>
+	<note id="30e74b6b-597c-4f51-99a5-03061d7a2d50" location="39 25" size="10 2">S8 Task 2 - Set Value of TC/TransComm/InSourcePos_SMTOPLC ==
 Value of  Destination/TransComm/InSourcePos_PLCTOSM</note>
-	<note id="35a9b3c9-6664-4545-8cf8-1c0f34ac5a22" location="39 27" size="9 2">S12 - Set Value of Destination/TransComm/DestRollRun_SMTOPLC ==
-Value of TC/TransComm/DestRollRun_PLCTOSM</note>
-	<note id="01f2c237-328b-4c1a-8b87-7b045c952a61" location="39 29" size="9 2">S13 - Set Value of TC/TransComm/DestRollRun_SMTOPLC ==
-Value of Destination/TransComm/DestRollRun_PLCTOSM</note>
+	<note id="35a9b3c9-6664-4545-8cf8-1c0f34ac5a22" location="39 27" size="10 2">S8 Task 3 - Set Value of Destination/TransComm/DestRollRun_SMTOPLC 
+== Value of TC/TransComm/DestRollRun_PLCTOSM</note>
+	<note id="01f2c237-328b-4c1a-8b87-7b045c952a61" location="39 29" size="10 2">S8 Task 4 - Set Value of TC/TransComm/DestRollRun_SMTOPLC 
+== Value of Destination/TransComm/DestRollRun_PLCTOSM</note>
 	<note id="bd2000cc-5729-41d7-9a9f-2d70b429488e" location="39 34" size="9 2">If TC/LocOccupied_PLCTOSM = 1, loop
 If TC/LocOccupied_PLCTOSM = 0, end loop
 </note>
-	<note id="a16c95fb-4c90-4459-996d-c40efe2108f7" location="39 41" size="9 1">Reset SMTOPLC dest  and TC Tags and ParkLocation to 0</note>
-	<note id="98c5b1ad-3bb0-49e7-9be1-b3a15c0807aa" location="39 43" size="9 4">Finish secuential chart, and start time script,
-if doesn find any auto moves and operator 
-set park_location_smtoplc the car goes to 
-park location.</note>
+	<note id="a49c329c-b34f-4162-98de-fba0eb78a550" location="39 37" size="9 1">S9: Reset destinationpath parameter.
+</note>
+	<note id="a16c95fb-4c90-4459-996d-c40efe2108f7" location="39 41" size="9 1">S10: Reset SMTOPLC dest  and TC Tags and ParkLocation to 0</note>
+	<note id="98c5b1ad-3bb0-49e7-9be1-b3a15c0807aa" location="39 43" size="8 1">Finish SFC, and start timer script.</note>
 	<link id="83b8c7e2-df3c-4b9b-9e43-f3c8b7d128ad" location="3 1"><left/><down/><right/></link>
 	<link id="b607abfd-1d7c-4e04-8671-3e7a45977adf" location="3 2"><up/><down/></link>
 	<link id="95dd0e8f-877b-4ad4-85d7-853324d5f7d0" location="4 1"><left/><right/></link>
@@ -265,15 +312,15 @@ park location.</note>
 	<link id="e53ebcf4-1b15-4c6c-b6b2-fd6b1f18ea65" location="11 10"><up/><down/></link>
 	<link id="9fa795f4-010c-4f61-bd63-6c3ed0a9b11f" location="0 15"><up/><down/></link>
 	<link id="97801008-b3f0-4191-94ae-8341947f64d0" location="11 11"><up/><down/></link>
-	<link id="d10076be-a755-44b0-a9c1-b8d75b1e5aa7" location="11 12"><up/><down/></link>
+	<link id="d10076be-a755-44b0-a9c1-b8d75b1e5aa7" location="11 12"><up/><left/><down/></link>
 	<link id="058d3503-d035-4209-acae-ad3db4792615" location="0 17"><up/><down/></link>
-	<link id="4d8d6097-e931-4004-8008-0d4251113745" location="11 14"><up/><down/></link>
+	<link id="4d8d6097-e931-4004-8008-0d4251113745" location="11 13"><up/><down/></link>
+	<link id="4921eca3-45b8-4d17-8b84-455e925e01c4" location="11 14"><up/><down/></link>
 	<link id="81de1794-a40e-49d0-97e7-364d81cafeb4" location="0 18"><up/><down/></link>
-	<link id="f32d0d89-879c-40ee-ae20-7a70369364a4" location="11 15"><up/><down/></link>
 	<link id="a81445e9-89eb-45f0-9209-f1cf3736be8f" location="0 19"><up/><down/></link>
-	<link id="d13fb065-68ee-45b4-af83-1ca0788ad03c" location="11 16"><up/><down/></link>
+	<link id="5b9ec85a-4cbf-4e77-bf69-4929586c1135" location="11 16"><up/><down/></link>
 	<link id="9fcf4e1f-a428-4183-adf9-234b8d5af71c" location="0 20"><up/><down/></link>
-	<link id="8cfeca1e-5389-4307-8b37-1af49de224f1" location="11 17"><up/><down/></link>
+	<link id="f71b6620-7bfd-4edf-bbcd-612cfd70314c" location="11 17"><up/><down/></link>
 	<link id="a63d7517-aed6-4f39-b0ae-2037283075b2" location="11 18"><up/><down/></link>
 	<link id="c0a6a41a-0447-4bf3-80b5-f2f1a10ddfa1" location="10 19"><up/><down/><right/></link>
 	<link id="2cad66d3-7d7c-452d-b601-b7e49d2d5328" location="11 19"><up/><left/><down/></link>
@@ -363,7 +410,7 @@ park location.</note>
 	<link id="ead078b6-d0f7-4c8e-98e1-0bdf6959f777" location="34 12"><up/><down/></link>
 	<link id="f59343c3-b96f-4c7b-ac51-6e0d2268c52c" location="25 26"><up/><down/></link>
 	<link id="448a62d6-5848-4f90-baa2-0424792108a1" location="34 13"><up/><down/></link>
-	<link id="4aceb1d7-3667-4bfd-9905-1c3f953f62aa" location="13 34"><up/><down/></link>
+	<link id="0b05cec2-07de-40ea-ae5a-9ae4a3869ed1" location="13 34"><up/><down/></link>
 	<link id="7dee809c-5a8f-4127-987e-8cb4a3961c42" location="36 6"><left/><right/></link>
 	<link id="48bd3944-ca9e-4e95-9998-ba052d9669b6" location="34 14"><up/><down/></link>
 	<link id="5fa746eb-ddba-4a40-a190-917039d9e13c" location="25 27"><up/><down/></link>
@@ -374,6 +421,7 @@ park location.</note>
 	<link id="d796868b-84c2-4713-a1ea-a2d190c3ecd6" location="34 15"><up/><down/></link>
 	<link id="35088946-83b2-4d47-9d67-ea118e55ea33" location="4 37"><left/><right/></link>
 	<link id="f0ce32d5-283b-46e6-86ef-61e2a105d36b" location="5 37"><left/><right/></link>
+	<link id="c62b9466-6967-4050-bc34-bdaac61dabde" location="13 35"><up/><down/></link>
 	<link id="f90076b5-0ab2-4c3d-aca6-3bc0a9943c80" location="6 37"><left/><right/></link>
 	<link id="e1458eb7-7d9f-4f3b-ad8a-2da2e7c74b32" location="37 6"><up/><left/><down/></link>
 	<link id="fc52a5e2-83db-43f3-b110-21d97c0715cc" location="25 28"><up/><down/></link>
@@ -384,17 +432,17 @@ park location.</note>
 	<link id="6a11d4ee-1224-4614-afc2-ff62267a21f0" location="34 17"><up/><down/></link>
 	<link id="7df3089e-08f9-41c6-9234-8e768e69ee3a" location="9 37"><left/><right/></link>
 	<link id="40f77adc-5641-48d2-a67c-703edbbac70b" location="37 9"><up/><down/></link>
-	<link id="8dfdfad1-68ce-45f4-942e-70adb4ce524e" location="13 36"><up/><down/></link>
 	<link id="43847f44-4099-4085-b8c8-ae7b695375fd" location="10 37"><left/><right/></link>
 	<link id="1ceb5ae5-b31b-44a1-aaad-1aceca863106" location="34 18"><up/><down/><right/></link>
 	<link id="89fb516c-747f-48a0-90f0-8397afc5ccbe" location="11 37"><left/><right/></link>
 	<link id="73a9a2b0-03ec-4a48-8d6b-3f6da3c71dbb" location="37 11"><up/><down/></link>
 	<link id="ae08bed0-9c26-4f05-9491-84c2cd05a2f8" location="12 37"><left/><right/></link>
+	<link id="cfaa7bff-aa8b-4753-afcd-7eb3b9459bac" location="37 12"><up/><down/></link>
 	<link id="4b4f4cba-0338-41e1-be72-a5fd2269221a" location="34 19"><up/><down/></link>
 	<link id="2451b155-7a26-4892-8601-b05beedd79f7" location="25 30"><up/><down/></link>
 	<link id="424b93d9-2a10-4ff0-9159-7a8622e5ba17" location="13 37"><up/><left/><down/></link>
-	<link id="d8cfc661-2aa7-473d-9974-d82ba559b1c7" location="37 13"><up/><down/></link>
 	<link id="bbea0b53-593c-47e1-9ac4-e8528d85a203" location="34 20"><up/><left/><right/></link>
+	<link id="cf16cbef-9fbf-4097-ac23-2c3e0db6d4fd" location="37 14"><up/><down/></link>
 	<link id="acf0d4e4-d513-43cb-b05c-089142588e2a" location="25 31"><up/><down/></link>
 	<link id="bcb60581-6b3a-4df7-b45f-43e1c1ffa575" location="37 15"><up/><down/></link>
 	<link id="6e2266f3-a7df-4db0-8668-2e5654b9be71" location="35 20"><left/><right/></link>
@@ -455,8 +503,7 @@ park location.</note>
 	<link id="30f9b9c8-249a-499f-90c3-b00211a18493" location="38 38"><up/><down/></link>
 	<link id="b1da34a9-0125-4ab7-b4e3-b76916353f20" location="37 39"><left/><right/></link>
 	<link id="86c5b161-3a12-4dbf-9bad-64f833025036" location="38 39"><up/><left/><down/></link>
-	<link id="9bcab2b7-5e77-422a-b7da-29038bfe310c" location="38 40"><up/><down/></link>
-	<link id="720d1b72-8216-4ea6-8cd8-1c8d02fe7d5d" location="38 42"><up/><down/></link>
-	<link id="f0c46bae-598a-4a94-b404-3583511ab847" location="38 43"><up/><down/></link>
+	<link id="276f65ee-0082-4244-aefa-fd86662e895d" location="38 40"><up/><down/></link>
+	<link id="d2211dfb-7201-46d2-b61c-dc5d3f3656b8" location="38 42"><up/><down/></link>
 
 </sfc>

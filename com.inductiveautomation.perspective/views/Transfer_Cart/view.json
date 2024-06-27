@@ -3404,7 +3404,7 @@
           "component": {
             "onActionPerformed": {
               "config": {
-                "script": "\tvalor\u003dsystem.tag.readBlocking([\u0027[default]PressIF_TransferCart/TC_AGTC/TransComm/ParkLocation_SMTOPLC\u0027])[0].value\n\ttotal\u003d(valor-15831.53)/435.26\n\tself.getSibling(\"Infeed\").props.value \u003d total\n\tsystem.perspective.print(total)"
+                "script": "\t#valor\u003dsystem.tag.readBlocking([\u0027[default]PressIF_TransferCart/TC_AGTC/TransComm/ParkLocation_SMTOPLC\u0027])[0].value\n\t#total\u003d(valor-15831.53)/435.26\n\t#self.getSibling(\"Infeed\").props.value \u003d total\n\t#system.perspective.print(total)\n\t\n\tparams \u003d {}\n\tresult \u003d system.db.runNamedQuery(\u0027Transfer_Carts/Park_Location/getInfeedEntry\u0027, params)\n\tif result.rowCount \u003e 0:\n\t\tinfeed_position \u003d result.getValueAt(0, \u0027position\u0027)\n\t\tformatted_position \u003d \"{:.0f}\".format(infeed_position)\n\t\tself.getSibling(\u0027infeedPark\u0027).props.text \u003d str(formatted_position)\n\t\tself.getSibling(\u0027Infeed\u0027).props.value \u003d (infeed_position - 15831.53) / 435.26\n\telse:\n\t\tself.getSibling(\u0027infeedPark\u0027).props.text \u003d \u0027No Data\u0027\n\t\t\n\tparams_o \u003d {}\n\tresult_o \u003d system.db.runNamedQuery(\u0027Transfer_Carts/Park_Location/getOutfeedEntry\u0027,params_o)\n\tif result_o.rowCount \u003e 0:\n\t\toutfeed_position \u003d result_o.getValueAt(0, \u0027position\u0027)\n\t\tformatted_o_position \u003d \"{:.0f}\".format(outfeed_position)\n\t\tself.getSibling(\u0027outfeedPark\u0027).props.text \u003d str(formatted_o_position)\n\t\tself.getSibling(\u0027Outfeed\u0027).props.value \u003d (outfeed_position - 16615) / 419.37\n\telse:\n\t\tself.getSibling(\u0027outfeedPark\u0027).props.text \u003d \u0027No Data\u0027"
               },
               "scope": "G",
               "type": "script"
@@ -3423,7 +3423,8 @@
         "props": {
           "label": {
             "text": "Set park Location"
-          }
+          },
+          "selected": true
         },
         "type": "ia.input.toggle-switch"
       },
@@ -3577,7 +3578,7 @@
           "dom": {
             "onMouseUp": {
               "config": {
-                "script": "\tvalue\u003d(self.props.value*435.26)+15831.53\n\tsystem.tag.writeBlocking([\u0027[default]PressIF_TransferCart/TC_AGTC/TransComm/ParkLocation_SMTOPLC\u0027],[value])"
+                "script": "\tvalue\u003d(self.props.value*435.26)+15831.53\n\tparameters \u003d {\u0027position\u0027: value}\n\tsystem.db.runNamedQuery(\u0027Transfer_Carts/Park_Location/UpdateInfeedParkLocation\u0027, parameters)\n\tsystem.perspective.print(value)\n\t\n\t#For writing to label\n\tparams \u003d {}\n\tresult \u003d system.db.runNamedQuery(\u0027Transfer_Carts/Park_Location/getInfeedEntry\u0027, params)\n\tif result.rowCount \u003e 0:\n\t\tinfeed_position \u003d result.getValueAt(0, \u0027position\u0027)\n\t\tformatted_position \u003d \"{:.0f}\".format(infeed_position)\n\t\tself.getSibling(\u0027infeedPark\u0027).props.text \u003d str(formatted_position)\n\t\tsystem.tag.write(\u0027[default]PressIF_TransferCart/TC_AGTC/TransComm/ParkLocation_SMTOPLC\u0027, formatted_position)\n\telse:\n\t\tself.getSibling(\u0027infeedPark\u0027).props.text \u003d \u0027No Data\u0027"
               },
               "scope": "G",
               "type": "script"
@@ -3610,7 +3611,8 @@
           },
           "railColor": "#E62525",
           "step": 0.1,
-          "trackColor": "#E62525"
+          "trackColor": "#E62525",
+          "value": 20.1
         },
         "type": "ia.input.slider"
       },
@@ -3745,7 +3747,7 @@
           }
         },
         "props": {
-          "text": 0
+          "text": "No Data"
         },
         "type": "ia.display.label"
       },

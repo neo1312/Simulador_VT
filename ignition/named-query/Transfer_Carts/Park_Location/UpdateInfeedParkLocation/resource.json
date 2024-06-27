@@ -12,13 +12,13 @@
     "fallbackValue": "",
     "maxReturnSize": 100,
     "cacheUnit": "SEC",
-    "type": "Query",
+    "type": "UpdateQuery",
     "enabled": true,
     "cacheAmount": 1,
     "cacheEnabled": false,
-    "database": "Sample_SQLite_Database",
+    "database": "",
     "fallbackEnabled": false,
-    "lastModificationSignature": "a0cf05ebce324789a8a394b08d02767d5373c91647eebebd526ea151627d5b13",
+    "lastModificationSignature": "ab2584e0f9c3bc5479c0767378bf2011537165d4921d4d55160e897cf4fade66",
     "permissions": [
       {
         "zone": "",
@@ -27,7 +27,14 @@
     ],
     "lastModification": {
       "actor": "MPS",
-      "timestamp": "2024-06-27T13:02:43Z"
-    }
+      "timestamp": "2024-06-27T20:01:53Z"
+    },
+    "parameters": [
+      {
+        "type": "Parameter",
+        "identifier": "position",
+        "sqlType": 4
+      }
+    ]
   }
 }

@@ -16,9 +16,9 @@
     "enabled": true,
     "cacheAmount": 1,
     "cacheEnabled": false,
-    "database": "",
+    "database": "Sample_SQLite_Database",
     "fallbackEnabled": false,
-    "lastModificationSignature": "04d6e250498b8df953911dde11ff523749a78091724ff69ab869af50f990784a",
+    "lastModificationSignature": "2aa0c867d730f4f98e70da54293421dd7fd4d8f971106e9c7b3894f60764f40e",
     "permissions": [
       {
         "zone": "",
@@ -27,19 +27,7 @@
     ],
     "lastModification": {
       "actor": "MPS",
-      "timestamp": "2024-06-11T15:11:27Z"
-    },
-    "parameters": [
-      {
-        "type": "Parameter",
-        "identifier": "position",
-        "sqlType": 4
-      },
-      {
-        "type": "Parameter",
-        "identifier": "slider",
-        "sqlType": 7
-      }
-    ]
+      "timestamp": "2024-06-27T19:35:47Z"
+    }
   }
 }

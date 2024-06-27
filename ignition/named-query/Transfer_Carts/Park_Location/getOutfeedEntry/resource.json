@@ -18,7 +18,7 @@
     "cacheEnabled": false,
     "database": "",
     "fallbackEnabled": false,
-    "lastModificationSignature": "8818a1492f2be8b6e9ffba38350440289e89369a6dd59bd2a7f577a4bc95d270",
+    "lastModificationSignature": "4f34628ca2a594953e875f844b8a89918df18de3159e7761944e4256ddfe386e",
     "permissions": [
       {
         "zone": "",
@@ -27,7 +27,7 @@
     ],
     "lastModification": {
       "actor": "MPS",
-      "timestamp": "2024-06-11T15:11:27Z"
+      "timestamp": "2024-06-27T19:35:47Z"
     }
   }
 }
